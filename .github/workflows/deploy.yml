@@ -25,9 +25,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
-      - run: npm ci
+      - run: npm install
 
       - name: Copiar icones para public
         run: mkdir -p public && cp icon192.png public/icon192.png && cp icon512.png public/icon512.png
