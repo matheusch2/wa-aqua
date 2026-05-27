@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WA Aqua</title>
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#066b63" />
+    <link rel="apple-touch-icon" href="icon192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="ondas-bg" aria-hidden="true">
+      <div class="onda onda-c"></div>
+      <div class="onda onda-d"></div>
+    </div>
+    <header class="header">
+      <div class="header-logo">
+        <h1>WA Aqua</h1>
+      </div>
+      <div class="header-right">
+        <button class="lua-badge" id="luaBadge">
+          <span class="lua-emoji" id="luaEmoji">🌕</span>
+          <div class="lua-info">
+            <span class="lua-nome" id="luaNome">Lua Cheia</span>
+            <span class="lua-sub" id="luaSub">carregando...</span>
+          </div>
+        </button>
+        <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+      </div>
+      <nav class="dropdown" id="dropdown">
+        <button class="dropdown-item" id="menuBiomassa">Biomassa</button>
+        <button class="dropdown-item" id="menuM2">Animais por m²</button>
+      </nav>
+    </header>
+
+    <div class="modal-overlay" id="luaModal">
+      <div class="modal-card">
+        <button class="modal-close" id="fecharLua">✕</button>
+        <div class="modal-lua-emoji" id="modalEmoji">🌕</div>
+        <h3 class="modal-fase" id="modalFase">Lua Cheia</h3>
+        <div class="modal-info">
+          <div class="modal-item">
+            <span class="modal-item-emoji">🌕</span>
+            <div>
+              <span class="modal-item-label">Próxima Lua Cheia</span>
+              <span class="modal-item-valor" id="modalCheia">—</span>
+            </div>
+          </div>
+          <div class="modal-item">
+            <span class="modal-item-emoji">🌑</span>
+            <div>
+              <span class="modal-item-label">Próxima Lua Nova</span>
+              <span class="modal-item-valor" id="modalNova">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main class="content">
+      <section class="card" id="cardBiomassa">
+        <h2 class="card-title">Calculadora de Biomassa</h2>
+        <div class="field">
+          <label for="populacao">População inicial</label>
+          <input class="input-base" type="text" id="populacao" placeholder="Ex: 200.000" inputmode="numeric" />
+        </div>
+        <div class="field">
+          <label for="consumo">Consumo diário de ração</label>
+          <div class="input-group">
+            <input type="number" id="consumo" placeholder="Ex: 50" />
+            <span class="unidade">kg</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="peso">Peso médio do camarão</label>
+          <div class="input-group">
+            <input type="number" id="peso" placeholder="Ex: 10" />
+            <span class="unidade">g</span>
+          </div>
+        </div>
+        <button class="btn-primary" id="btnCalcular">Calcular</button>
+        <button class="btn-ghost" id="btnLimpar">Limpar</button>
+        <div id="resultado" class="resultado"></div>
+      </section>
+
+      <section class="card" id="cardM2" style="display:none">
+        <h2 class="card-title">Animais por m²</h2>
+        <div class="field">
+          <label for="modoM2">Modo de cálculo</label>
+          <select class="input-base" id="modoM2">
+            <option value="densidade">Calcular animais por m²</option>
+            <option value="povoamento">Calcular total para povoar</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="areaHa">Tamanho do viveiro</label>
+          <div class="input-group">
+            <input type="text" id="areaHa" placeholder="Ex: 05 = 0.5 ha" inputmode="numeric" />
+            <span class="unidade">ha</span>
+          </div>
+        </div>
+        <div id="campoDensidade">
+          <div class="field">
+            <label for="totalPovoado">Total povoado</label>
+            <input class="input-base" type="text" id="totalPovoado" placeholder="Ex: 200.000" inputmode="numeric" />
+          </div>
+        </div>
+        <div id="campoPovoamento" style="display:none">
+          <div class="field">
+            <label for="animaisM2">Animais por m²</label>
+            <input class="input-base" type="number" id="animaisM2" placeholder="Ex: 20" />
+          </div>
+        </div>
+        <button class="btn-primary" id="btnCalcularM2">Calcular</button>
+        <button class="btn-ghost" id="btnLimparM2">Limpar</button>
+        <div id="resultadoM2" class="resultado"></div>
+      </section>
+    </main>
+
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+        <span class="ticker-item">WA AQUA CONSULTORIA <span class="dot">◆</span></span>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

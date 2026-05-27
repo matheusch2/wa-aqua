@@ -1,10 +1,11 @@
-const CACHE = 'wa-aqua-v2';
+const CACHE = 'wa-aqua-v3';
+const BASE = '/wa-aqua/';
 const ARQUIVOS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon192.png',
-  './icon512.png'
+  BASE,
+  BASE + 'index.html',
+  BASE + 'manifest.json',
+  BASE + 'icon192.png',
+  BASE + 'icon512.png',
 ];
 
 self.addEventListener('install', e => {
