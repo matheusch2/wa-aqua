@@ -22,6 +22,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* HEADER */
 .header {
   background: linear-gradient(135deg, var(--verde-escuro) 0%, var(--verde-claro) 100%);
   padding: 18px 20px;
@@ -50,21 +51,33 @@ body {
   gap: 10px;
 }
 
+/* LUA BADGE — branco com texto escuro, clicavel */
 .lua-badge {
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
   border-radius: 8px;
   padding: 8px 14px 8px 10px;
   display: flex;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
+
+.lua-badge:active { background: rgba(255, 255, 255, 0.8); }
 
 .lua-emoji { font-size: 24px; line-height: 1; }
 
+.lua-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .lua-nome {
   display: block;
-  color: #fff;
+  color: var(--verde-escuro);
   font-size: 12px;
   font-weight: 700;
   line-height: 1.3;
@@ -72,7 +85,7 @@ body {
 
 .lua-sub {
   display: block;
-  color: #ff6b6b;
+  color: #333;
   font-size: 10px;
   font-weight: 600;
 }
@@ -94,6 +107,7 @@ body {
 
 .menu-btn:hover { background: rgba(255, 255, 255, 0.22); }
 
+/* DROPDOWN */
 .dropdown {
   display: none;
   position: absolute;
@@ -132,6 +146,104 @@ body {
 .dropdown-item:last-child { border-bottom: none; }
 .dropdown-item:hover { background: var(--verde-suave); color: var(--verde); }
 
+/* MODAL DA LUA */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-overlay.aberto {
+  display: flex;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: 24px 24px 0 0;
+  padding: 32px 24px 44px;
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--cinza-1);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-lua-emoji {
+  font-size: 80px;
+  text-align: center;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.modal-fase {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--verde);
+  margin-bottom: 24px;
+}
+
+.modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--cinza-1);
+  border-radius: 14px;
+}
+
+.modal-item-emoji { font-size: 28px; line-height: 1; }
+
+.modal-item-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 3px;
+}
+
+.modal-item-valor {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+/* CONTENT */
 .content {
   padding: 20px 16px 90px;
   max-width: 440px;
@@ -154,7 +266,6 @@ body {
   padding-bottom: 14px;
   border-bottom: 2px solid var(--verde-fundo);
   text-align: center;
-  justify-content: center;
 }
 
 .field { margin-bottom: 14px; }
@@ -323,6 +434,7 @@ body {
   padding: 16px;
 }
 
+/* TICKER */
 .ticker-wrap {
   position: fixed;
   bottom: 0;

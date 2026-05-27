@@ -32,3 +32,18 @@ export function diasParaLuaCheia(): number {
 export function diasParaLuaNova(): number {
   return Math.ceil(CICLO - diaDosCiclo());
 }
+
+export function proximaLuaCheia(): Date {
+  const d = diaDosCiclo();
+  const alvo = 14.77;
+  const dias = d < alvo ? alvo - d : CICLO - d + alvo;
+  return new Date(Date.now() + dias * 24 * 60 * 60 * 1000);
+}
+
+export function proximaLuaNova(): Date {
+  return new Date(Date.now() + (CICLO - diaDosCiclo()) * 24 * 60 * 60 * 1000);
+}
+
+export function formatarData(data: Date): string {
+  return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' });
+}

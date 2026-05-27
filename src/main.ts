@@ -1,4 +1,4 @@
-import { obterFase, diasParaLuaCheia, diasParaLuaNova } from './lua';
+import { obterFase, diasParaLuaCheia, diasParaLuaNova, proximaLuaCheia, proximaLuaNova, formatarData } from './lua';
 import { calcularBiomassa } from './calculadora';
 
 function fmt(v: number, casas: number): string {
@@ -24,6 +24,27 @@ function atualizarLua(): void {
   el('luaEmoji').textContent = emoji;
   el('luaNome').textContent = nome;
   el('luaSub').textContent = sub;
+}
+
+function abrirModalLua(): void {
+  const { emoji, nome } = obterFase();
+  const diasCheia = diasParaLuaCheia();
+  const diasNova = diasParaLuaNova();
+  const cheia = proximaLuaCheia();
+  const nova = proximaLuaNova();
+
+  el('modalEmoji').textContent = emoji;
+  el('modalFase').textContent = nome;
+  el('modalCheia').textContent =
+    `em ${diasCheia} dia${diasCheia !== 1 ? 's' : ''} — ${formatarData(cheia)}`;
+  el('modalNova').textContent =
+    `em ${diasNova} dia${diasNova !== 1 ? 's' : ''} — ${formatarData(nova)}`;
+
+  el('luaModal').classList.add('aberto');
+}
+
+function fecharModalLua(): void {
+  el('luaModal').classList.remove('aberto');
 }
 
 function formatarPopulacao(input: HTMLInputElement): void {
@@ -121,6 +142,14 @@ function init(): void {
     setInterval(atualizarLua, 24 * 60 * 60 * 1000);
   }, midnight.getTime() - now.getTime());
 
+  // Modal da lua
+  el('luaBadge').addEventListener('click', abrirModalLua);
+  el('fecharLua').addEventListener('click', fecharModalLua);
+  el('luaModal').addEventListener('click', (e) => {
+    if (e.target === el('luaModal')) fecharModalLua();
+  });
+
+  // Menu
   const menuBtn = el('menuBtn');
   const dropdown = el('dropdown');
   let menuAberto = false;
