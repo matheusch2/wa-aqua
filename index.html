@@ -3,109 +3,159 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>wa aqua</title>
-
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#066b63">
     <link rel="apple-touch-icon" href="icon192.png">
-
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            margin: 0;
-            padding: 0;
-            background: #f5f5f5;
+            background: #eef5f4;
             font-family: Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        .topo {
+            background: linear-gradient(135deg, #066b63 0%, #0a9688 100%);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+            position: relative;
         }
 
         .topo h1 {
             color: white;
-            margin: 0;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
-        .topo {
-            background-color: rgb(6, 107, 99);
-            padding: 15px 20px;
+        .topo-direita {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            width: 100%;
-            box-sizing: border-box;
-            position: relative;
+            gap: 10px;
+        }
+
+        .lua-badge {
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 20px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .lua-badge .lua-emoji {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .lua-badge .lua-nome {
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
         .menu {
             color: white;
-            font-size: 30px;
-            font-weight: bolder;
+            font-size: 26px;
             cursor: pointer;
-            padding: 5px 10px;
+            padding: 4px 8px;
+            border-radius: 8px;
         }
 
         .menu-opcoes {
             display: none;
-            background-color: white;
-            border: 1px solid #ccc;
-            width: 220px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+            width: 230px;
             position: absolute;
-            top: 70px;
-            right: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            border-radius: 8px;
+            top: 68px;
+            right: 16px;
             overflow: hidden;
             z-index: 1000;
         }
 
         .menu-opcoes div {
-            padding: 12px;
+            padding: 14px 18px;
             cursor: pointer;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+            color: #333;
         }
 
-        .menu-opcoes div:last-child {
-            border-bottom: none;
-        }
+        .menu-opcoes div:last-child { border-bottom: none; }
 
         .menu-opcoes div:hover {
-            background-color: #f5f5f5;
-        }
-
-        .card h2 {
-            text-align: center;
-            color: rgb(6, 107, 99);
-            margin-top: 0;
+            background: #f0faf9;
+            color: #066b63;
         }
 
         .card {
             background: white;
-            width: 90%;
-            max-width: 320px;
-            margin: 30px auto;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(33, 32, 32, 0.15);
+            width: 92%;
+            max-width: 380px;
+            margin: 24px auto;
+            padding: 24px;
+            border-radius: 18px;
+            box-shadow: 0 4px 20px rgba(6, 107, 99, 0.1);
         }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            font-size:16px
+        .card h2 {
+            text-align: center;
+            color: #066b63;
+            font-size: 19px;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #eef5f4;
         }
-        select {
+
+        label {
+            display: block;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        input, select {
             width: 100%;
-            padding: 10px;
-         margin-bottom: 15px;
-          box-sizing: border-box;
-        font-size:16px
+            padding: 13px 14px;
+            margin-bottom: 16px;
+            border: 1.5px solid #e8e8e8;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            background: #fafafa;
+            color: #333;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: #066b63;
+            background: white;
         }
 
         .input-unidade {
             display: flex;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 15px;
-            border: 1px solid #999;
-            box-sizing: border-box;
+            align-items: stretch;
+            margin-bottom: 16px;
+            border: 1.5px solid #e8e8e8;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fafafa;
+            transition: border-color 0.2s;
+        }
+
+        .input-unidade:focus-within {
+            border-color: #066b63;
             background: white;
         }
 
@@ -113,104 +163,104 @@
             flex: 1;
             border: none;
             margin-bottom: 0;
-            padding: 10px;
-            box-sizing: border-box;
-            outline: none;
-            font-size:16px
+            background: transparent;
+            padding: 13px 14px;
+            border-radius: 0;
         }
 
         .input-unidade span {
-            background: #f2f2f2;
-            width: 50px;
-            text-align: center;
-            padding: 10px 0;
-            color: #555;
-            border-left: 1px solid #999;
-            box-sizing: border-box;
+            background: #f0faf9;
+            color: #066b63;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            border-left: 1.5px solid #e8e8e8;
         }
 
-        button {
+        .btn-calcular {
             width: 100%;
-            padding: 12px;
-            background: red;
+            padding: 15px;
+            background: #066b63;
             color: white;
             border: none;
-            border-radius: 8px;
-        }
-
-        .limpar {
-            background: transparent;
-            color: gray;
-            border: none;
-            margin-top: 10px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            display: block;
+            letter-spacing: 0.5px;
+            transition: background 0.2s, transform 0.1s;
         }
 
-        .resultado {
-            margin-top: 25px;
-            color: rgb(6, 107, 99);
+        .btn-calcular:active { transform: scale(0.98); }
+
+        .btn-limpar {
+            background: transparent;
+            color: #bbb;
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+            padding: 8px;
+            font-size: 14px;
+            cursor: pointer;
         }
+
+        .resultado { margin-top: 22px; }
 
         .resultado-box {
-            background: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 12px 14px;
-            width: 260px;
-            margin: 0 auto 12px auto;
+            background: #f8fffe;
+            border: 1.5px solid #d4eeeb;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
 
         .resultado-box p {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin: 0 0 8px 0;
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 700;
         }
 
         .resultado-box h3 {
-            font-size: 20px;
-            color: rgb(6, 107, 99);
-            margin: 0;
-        }
-
-        .resultado-box span {
-            display: block;
-            font-size: 14px;
-            color: #666;
-            margin: 8px 0 0 0;
+            font-size: 26px;
+            color: #066b63;
+            font-weight: bold;
         }
 
         .resultado-box.destaque {
-            background: rgb(6, 107, 99);
-            border: none;
+            background: linear-gradient(135deg, #066b63, #0a9688);
+            border-color: transparent;
         }
 
         .resultado-box.destaque p,
-        .resultado-box.destaque h3,
-        .resultado-box.destaque span {
-            color: white;
-        }
+        .resultado-box.destaque h3 { color: white; }
 
         .sobrevivencia-texto {
             text-align: center;
-            color: #555;
-            font-size: 16px;
-            margin-top: 10px;
+            color: #666;
+            font-size: 15px;
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 10px;
         }
     </style>
 </head>
-
 <body>
+
     <div class="topo">
         <h1>wa aqua</h1>
-        <div class="menu" onclick="abrirMenu()">☰</div>
+        <div class="topo-direita">
+            <div class="lua-badge">
+                <span class="lua-emoji" id="luaEmoji">🌕</span>
+                <span class="lua-nome" id="luaNome">Lua Cheia</span>
+            </div>
+            <div class="menu" onclick="abrirMenu()">☰</div>
+        </div>
     </div>
 
     <div id="menu-opcoes" class="menu-opcoes">
@@ -221,319 +271,222 @@
     <div id="card-biomassa" class="card">
         <h2>Calculadora de Biomassa</h2>
 
-        <label for="populacao">População inicial</label>
-        <input type="text" id="populacao" placeholder="Ex: 200000" oninput="formatarPopulacao(this)">
+        <label>População inicial</label>
+        <input type="text" id="populacao" placeholder="Ex: 200.000" oninput="formatarPopulacao(this)">
 
-        <label for="consumo">Consumo diário de ração</label>
+        <label>Consumo diário de ração</label>
         <div class="input-unidade">
             <input type="number" id="consumo" placeholder="Ex: 50">
             <span>kg</span>
         </div>
 
-        <label for="peso">Peso médio do camarão</label>
+        <label>Peso médio do camarão</label>
         <div class="input-unidade">
             <input type="number" id="peso" placeholder="Ex: 10">
             <span>g</span>
         </div>
 
-        <div class="acoes">
-            <button onclick="calcularBiomassa()">Calcular</button>
-            <button class="limpar" onclick="limparCampos()">Limpar</button>
-        </div>
+        <button class="btn-calcular" onclick="calcularBiomassa()">Calcular</button>
+        <button class="btn-limpar" onclick="limparCampos()">Limpar</button>
 
         <div id="resultado" class="resultado"></div>
     </div>
 
-    <div id="card-m2" class="card" style="display: none;">
-    <h2>Animais por m²</h2>
+    <div id="card-m2" class="card" style="display:none">
+        <h2>Animais por m²</h2>
 
-    <label for="modoCalculoM2">Modo de cálculo</label>
-    <select id="modoCalculoM2" onchange="trocarModoM2()">
-        <option value="densidade">Calcular animais por m²</option>
-        <option value="povoamento">Calcular total para povoar</option>
-    </select>
+        <label>Modo de cálculo</label>
+        <select id="modoCalculoM2" onchange="trocarModoM2()">
+            <option value="densidade">Calcular animais por m²</option>
+            <option value="povoamento">Calcular total para povoar</option>
+        </select>
 
-    <label for="areaHa">Tamanho do viveiro</label>
-    <div class="input-unidade">
-        <input type="text" id="areaHa" placeholder="Ex: 05 = 0.5 ha" oninput="formatarAreaHa(this)">
-        <span>ha</span>
+        <label>Tamanho do viveiro</label>
+        <div class="input-unidade">
+            <input type="text" id="areaHa" placeholder="Ex: 05 = 0.5 ha" oninput="formatarAreaHa(this)">
+            <span>ha</span>
+        </div>
+
+        <div id="modo-densidade">
+            <label>Total povoado</label>
+            <input type="text" id="totalPovoado" placeholder="Ex: 200.000" oninput="formatarPopulacao(this)">
+        </div>
+
+        <div id="modo-povoamento" style="display:none">
+            <label>Animais por m²</label>
+            <input type="number" id="animaisM2" placeholder="Ex: 20">
+        </div>
+
+        <button class="btn-calcular" onclick="calcularM2()">Calcular</button>
+        <button class="btn-limpar" onclick="limparCamposM2()">Limpar</button>
+
+        <div id="resultado-m2" class="resultado"></div>
     </div>
 
-    <div id="modo-densidade">
-        <label for="totalPovoado">Total povoado</label>
-        <input type="text" id="totalPovoado" placeholder="Ex: 200000" oninput="formatarPopulacao(this)">
-    </div>
+    <script>
+        // FASE DA LUA
+        function calcularFaseLua() {
+            const luaNova = new Date(2000, 0, 6, 18, 14);
+            const ciclo = 29.53058867;
+            const diff = (new Date() - luaNova) / (1000 * 60 * 60 * 24);
+            const fase = ((diff % ciclo) + ciclo) % ciclo;
 
-    <div id="modo-povoamento" style="display: none;">
-        <label for="animaisM2">Animais por m²</label>
-        <input type="number" id="animaisM2" placeholder="Ex: 20">
-    </div>
+            if (fase < 1.85)  return { emoji: '🌑', nome: 'Lua Nova' };
+            if (fase < 7.38)  return { emoji: '🌒', nome: 'Crescente' };
+            if (fase < 11.07) return { emoji: '🌓', nome: 'Quarto Crescente' };
+            if (fase < 14.77) return { emoji: '🌔', nome: 'Gibosa Crescente' };
+            if (fase < 18.46) return { emoji: '🌕', nome: 'Lua Cheia' };
+            if (fase < 22.15) return { emoji: '🌖', nome: 'Gibosa Minguante' };
+            if (fase < 25.84) return { emoji: '🌗', nome: 'Quarto Minguante' };
+            return { emoji: '🌘', nome: 'Minguante' };
+        }
 
-    <div class="acoes">
-        <button onclick="calcularM2()">Calcular</button>
-        <button class="limpar" onclick="limparCamposM2()">Limpar</button>
-    </div>
+        function atualizarLua() {
+            const { emoji, nome } = calcularFaseLua();
+            document.getElementById('luaEmoji').textContent = emoji;
+            document.getElementById('luaNome').textContent = nome;
+        }
 
-    <div id="resultado-m2" class="resultado"></div>
-</div>
+        atualizarLua();
+        const agora = new Date();
+        const meianoite = new Date(agora);
+        meianoite.setHours(24, 0, 0, 0);
+        setTimeout(function() {
+            atualizarLua();
+            setInterval(atualizarLua, 24 * 60 * 60 * 1000);
+        }, meianoite - agora);
 
-   <script>
+        // CALCULADORA
         const tabelaTaxaAlimentar = [
-            { peso: 1.0, taxa: 8.00 },
-            { peso: 2.0, taxa: 8.00 },
-            { peso: 3.0, taxa: 7.00 },
-            { peso: 4.0, taxa: 6.50 },
-            { peso: 5.0, taxa: 5.50 },
-            { peso: 6.0, taxa: 5.10 },
-            { peso: 7.0, taxa: 4.44 },
-            { peso: 8.0, taxa: 4.22 },
-            { peso: 9.0, taxa: 4.04 },
-            { peso: 10.0, taxa: 3.88 },
-            { peso: 11.0, taxa: 3.74 },
-            { peso: 12.0, taxa: 3.62 },
-            { peso: 13.0, taxa: 3.51 },
-            { peso: 14.0, taxa: 3.42 },
-            { peso: 15.0, taxa: 2.92 },
-            { peso: 16.0, taxa: 2.88 },
-            { peso: 17.0, taxa: 2.79 },
-            { peso: 18.0, taxa: 2.65 },
-            { peso: 19.0, taxa: 2.57},
-            { peso: 20.0, taxa: 2.39 }
+            { peso: 1.0, taxa: 8.00 }, { peso: 2.0, taxa: 8.00 },
+            { peso: 3.0, taxa: 7.00 }, { peso: 4.0, taxa: 6.50 },
+            { peso: 5.0, taxa: 5.50 }, { peso: 6.0, taxa: 5.10 },
+            { peso: 7.0, taxa: 4.44 }, { peso: 8.0, taxa: 4.22 },
+            { peso: 9.0, taxa: 4.04 }, { peso: 10.0, taxa: 3.88 },
+            { peso: 11.0, taxa: 3.74 }, { peso: 12.0, taxa: 3.62 },
+            { peso: 13.0, taxa: 3.51 }, { peso: 14.0, taxa: 3.42 },
+            { peso: 15.0, taxa: 2.92 }, { peso: 16.0, taxa: 2.88 },
+            { peso: 17.0, taxa: 2.79 }, { peso: 18.0, taxa: 2.65 },
+            { peso: 19.0, taxa: 2.57 }, { peso: 20.0, taxa: 2.39 }
         ];
 
-        function obterTaxaAlimentar(pesoInformado) {
-            if (pesoInformado < 1 || pesoInformado > 20) {
-                return null;
-            }
-
-            for (let i = 0; i < tabelaTaxaAlimentar.length; i++) {
-                if (pesoInformado === tabelaTaxaAlimentar[i].peso) {
-                    return tabelaTaxaAlimentar[i].taxa;
-                }
-            }
-
+        function obterTaxaAlimentar(p) {
+            if (p < 1 || p > 20) return null;
+            for (let i = 0; i < tabelaTaxaAlimentar.length; i++)
+                if (p === tabelaTaxaAlimentar[i].peso) return tabelaTaxaAlimentar[i].taxa;
             for (let i = 0; i < tabelaTaxaAlimentar.length - 1; i++) {
-                const atual = tabelaTaxaAlimentar[i];
-                const proximo = tabelaTaxaAlimentar[i + 1];
-
-                if (pesoInformado > atual.peso && pesoInformado < proximo.peso) {
-                    const diferencaPeso = proximo.peso - atual.peso;
-                    const diferencaTaxa = proximo.taxa - atual.taxa;
-                    const proporcao = (pesoInformado - atual.peso) / diferencaPeso;
-
-                    return atual.taxa + (diferencaTaxa * proporcao);
-                }
+                const a = tabelaTaxaAlimentar[i], b = tabelaTaxaAlimentar[i + 1];
+                if (p > a.peso && p < b.peso)
+                    return a.taxa + ((b.taxa - a.taxa) * (p - a.peso) / (b.peso - a.peso));
             }
-
             return null;
         }
 
-        function formatarNumeroBR(valor, casas = 0) {
-            return valor.toLocaleString('pt-BR', {
-                minimumFractionDigits: casas,
-                maximumFractionDigits: casas
-            });
-        }
+        function fmt(v, c) { return v.toLocaleString('pt-BR', { minimumFractionDigits: c, maximumFractionDigits: c }); }
 
         function formatarPopulacao(input) {
-            let valor = input.value.replace(/\D/g, "");
-            valor = Number(valor).toLocaleString("pt-BR");
-            if (valor === "0") valor = "";
-            input.value = valor;
+            let v = input.value.replace(/\D/g, '');
+            v = Number(v).toLocaleString('pt-BR');
+            input.value = v === '0' ? '' : v;
         }
 
-function formatarAreaHa(input) {
-    let valor = input.value.replace(/\D/g, "");
-
-    if (valor === "") {
-        input.value = "";
-        return;
-    }
-
-    if (valor.length === 1) {
-        input.value = "0." + valor;
-        return;
-    }
-
-    let parteInteira = valor.slice(0, -1);
-    let parteDecimal = valor.slice(-1);
-
-    parteInteira = String(parseInt(parteInteira, 10));
-
-    if (parteInteira === "NaN") {
-        parteInteira = "0";
-    }
-
-    input.value = parteInteira + "." + parteDecimal;
-}
+        function formatarAreaHa(input) {
+            let v = input.value.replace(/\D/g, '');
+            if (!v) { input.value = ''; return; }
+            if (v.length === 1) { input.value = '0.' + v; return; }
+            let i = String(parseInt(v.slice(0, -1), 10));
+            input.value = (i === 'NaN' ? '0' : i) + '.' + v.slice(-1);
+        }
 
         function calcularBiomassa() {
-            const populacao = parseFloat(document.getElementById("populacao").value.replace(/\./g, ""));
-            const consumo = parseFloat(document.getElementById("consumo").value);
-            const peso = parseFloat(document.getElementById("peso").value);
-            const resultado = document.getElementById("resultado");
-
+            const populacao = parseFloat(document.getElementById('populacao').value.replace(/\./g, ''));
+            const consumo = parseFloat(document.getElementById('consumo').value);
+            const peso = parseFloat(document.getElementById('peso').value);
+            const resultado = document.getElementById('resultado');
             if (!populacao || !consumo || !peso) {
-                resultado.innerHTML = "<p>Preencha todos os campos.</p>";
-                return;
+                resultado.innerHTML = '<p style="color:#aaa;text-align:center;margin-top:10px">Preencha todos os campos.</p>'; return;
             }
-
             const taxa = obterTaxaAlimentar(peso);
-
-            if (taxa === null) {
-                resultado.innerHTML = "<p>Peso médio fora da tabela padrão (2 g a 20 g).</p>";
-                return;
+            if (!taxa) {
+                resultado.innerHTML = '<p style="color:#aaa;text-align:center;margin-top:10px">Peso fora da tabela (1g a 20g).</p>'; return;
             }
-
             const biomassa = consumo / (taxa / 100);
             const quantidade = biomassa / (peso / 1000);
             const sobrevivencia = (quantidade / populacao) * 100;
-
             resultado.innerHTML = `
                 <div class="resultado-box destaque">
                     <p>Biomassa estimada</p>
-                    <h3>${formatarNumeroBR(biomassa, 1)} kg</h3>
+                    <h3>${fmt(biomassa, 1)} kg</h3>
                 </div>
-
                 <div class="resultado-box">
                     <p>População estimada</p>
-                    <h3>${formatarNumeroBR(Math.round(quantidade), 0)}</h3>
+                    <h3>${fmt(Math.round(quantidade), 0)}</h3>
                 </div>
-
                 <div class="sobrevivencia-texto">
-                    Sobrevivência estimada: ${formatarNumeroBR(sobrevivencia, 1)}%
-                </div>
-            `;
+                    Sobrevivência estimada: <strong>${fmt(sobrevivencia, 1)}%</strong>
+                </div>`;
         }
 
         function limparCampos() {
-            document.getElementById("populacao").value = "";
-            document.getElementById("consumo").value = "";
-            document.getElementById("peso").value = "";
-            document.getElementById("resultado").innerHTML = "";
+            ['populacao','consumo','peso'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('resultado').innerHTML = '';
         }
 
         function abrirMenu() {
-            let menu = document.getElementById("menu-opcoes");
-
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-            } else {
-                menu.style.display = "block";
-            }
+            const m = document.getElementById('menu-opcoes');
+            m.style.display = m.style.display === 'block' ? 'none' : 'block';
         }
 
         function mostrarBiomassa() {
-            document.getElementById("card-biomassa").style.display = "block";
-            document.getElementById("card-m2").style.display = "none";
-            document.getElementById("menu-opcoes").style.display = "none";
+            document.getElementById('card-biomassa').style.display = 'block';
+            document.getElementById('card-m2').style.display = 'none';
+            document.getElementById('menu-opcoes').style.display = 'none';
         }
 
         function mostrarM2() {
-            document.getElementById("card-biomassa").style.display = "none";
-            document.getElementById("card-m2").style.display = "block";
-            document.getElementById("menu-opcoes").style.display = "none";
+            document.getElementById('card-biomassa').style.display = 'none';
+            document.getElementById('card-m2').style.display = 'block';
+            document.getElementById('menu-opcoes').style.display = 'none';
         }
 
-       function trocarModoM2() {
-    const modo = document.getElementById("modoCalculoM2").value;
-    const modoDensidade = document.getElementById("modo-densidade");
-    const modoPovoamento = document.getElementById("modo-povoamento");
-    const resultado = document.getElementById("resultado-m2");
-
-    if (modo === "densidade") {
-        modoDensidade.style.display = "block";
-        modoPovoamento.style.display = "none";
-    } else {
-        modoDensidade.style.display = "none";
-        modoPovoamento.style.display = "block";
-    }
-
-    resultado.innerHTML = "";
-}
-
-function mostrarAreaConvertida() {
-    const areaHa = parseFloat(document.getElementById("areaHa").value);
-    const areaConvertida = document.getElementById("area-convertida");
-
-    if (!areaHa) {
-        areaConvertida.innerHTML = "";
-        return;
-    }
-
-    areaConvertida.innerHTML = `Área informada: ${areaHa} ha = ${formatarNumeroBR(areaHa * 10000, 0)} m²`;
-}
-
-function calcularM2() {
-    const modo = document.getElementById("modoCalculoM2").value;
-    const areaHa = parseFloat(document.getElementById("areaHa").value);
-    const resultado = document.getElementById("resultado-m2");
-
-    if (!areaHa) {
-        resultado.innerHTML = "<p>Preencha a área do viveiro.</p>";
-        return;
-    }
-
-    const areaM2 = areaHa * 10000;
-
-    if (modo === "densidade") {
-        const totalPovoado = parseFloat(document.getElementById("totalPovoado").value.replace(/\./g, ""));
-
-        if (!totalPovoado) {
-            resultado.innerHTML = "<p>Preencha o total povoado.</p>";
-            return;
+        function trocarModoM2() {
+            const modo = document.getElementById('modoCalculoM2').value;
+            document.getElementById('modo-densidade').style.display = modo === 'densidade' ? 'block' : 'none';
+            document.getElementById('modo-povoamento').style.display = modo === 'povoamento' ? 'block' : 'none';
+            document.getElementById('resultado-m2').innerHTML = '';
         }
 
-        const densidade = totalPovoado / areaM2;
-
-        resultado.innerHTML = `
-            <div class="resultado-box destaque">
-                <p>Área convertida</p>
-                <h3>${formatarNumeroBR(areaM2, 0)} m²</h3>
-            </div>
-
-            <div class="resultado-box">
-                <p>Animais por m²</p>
-                <h3>${Math.round(densidade)}</h3>
-            </div>
-        `;
-    } else {
-        const animaisM2 = parseFloat(document.getElementById("animaisM2").value);
-
-        if (!animaisM2) {
-            resultado.innerHTML = "<p>Preencha os animais por m².</p>";
-            return;
+        function calcularM2() {
+            const modo = document.getElementById('modoCalculoM2').value;
+            const areaHa = parseFloat(document.getElementById('areaHa').value);
+            const resultado = document.getElementById('resultado-m2');
+            if (!areaHa) { resultado.innerHTML = '<p style="color:#aaa;text-align:center;margin-top:10px">Preencha a área do viveiro.</p>'; return; }
+            const areaM2 = areaHa * 10000;
+            if (modo === 'densidade') {
+                const total = parseFloat(document.getElementById('totalPovoado').value.replace(/\./g, ''));
+                if (!total) { resultado.innerHTML = '<p style="color:#aaa;text-align:center;margin-top:10px">Preencha o total povoado.</p>'; return; }
+                resultado.innerHTML = `
+                    <div class="resultado-box destaque"><p>Área convertida</p><h3>${fmt(areaM2, 0)} m²</h3></div>
+                    <div class="resultado-box"><p>Animais por m²</p><h3>${Math.round(total / areaM2)}</h3></div>`;
+            } else {
+                const animaisM2 = parseFloat(document.getElementById('animaisM2').value);
+                if (!animaisM2) { resultado.innerHTML = '<p style="color:#aaa;text-align:center;margin-top:10px">Preencha os animais por m².</p>'; return; }
+                resultado.innerHTML = `
+                    <div class="resultado-box destaque"><p>Área convertida</p><h3>${fmt(areaM2, 0)} m²</h3></div>
+                    <div class="resultado-box"><p>Total para povoar</p><h3>${fmt(Math.round(areaM2 * animaisM2), 0)}</h3></div>`;
+            }
         }
 
-        const totalPovoar = areaM2 * animaisM2;
+        function limparCamposM2() {
+            document.getElementById('modoCalculoM2').value = 'densidade';
+            ['areaHa','totalPovoado','animaisM2'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('resultado-m2').innerHTML = '';
+            trocarModoM2();
+        }
 
-        resultado.innerHTML = `
-            <div class="resultado-box destaque">
-                <p>Área convertida</p>
-                <h3>${formatarNumeroBR(areaM2, 0)} m²</h3>
-            </div>
-
-            <div class="resultado-box">
-                <p>Total para povoar</p>
-                <h3>${formatarNumeroBR(Math.round(totalPovoar), 0)}</h3>
-            </div>
-        `;
-    }
-}
-
-function limparCamposM2() {
-    document.getElementById("modoCalculoM2").value = "densidade";
-    document.getElementById("areaHa").value = "";
-    document.getElementById("totalPovoado").value = "";
-    document.getElementById("animaisM2").value = "";
-    document.getElementById("resultado-m2").innerHTML = "";
-
-    trocarModoM2();
-}
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./serviceworker.js');
-    }
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./serviceworker.js');
+        }
     </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-const CACHE = 'wa-aqua-v1';
+const CACHE = 'wa-aqua-v2';
 const ARQUIVOS = [
   './',
   './index.html',
