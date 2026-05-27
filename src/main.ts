@@ -1,4 +1,3 @@
-import './style.css';
 import { obterFase, diasParaLuaCheia, diasParaLuaNova } from './lua';
 import { calcularBiomassa } from './calculadora';
 
@@ -153,7 +152,7 @@ function init(): void {
 
   el('btnCalcular').addEventListener('click', calcularBiomassaUI);
   el('btnLimpar').addEventListener('click', () => {
-    ['populacao', 'consumo', 'peso'].forEach(id => inp(id).value = '');
+    ['populacao', 'consumo', 'peso'].forEach(id => { inp(id).value = ''; });
     el('resultado').innerHTML = '';
   });
 
@@ -167,7 +166,7 @@ function init(): void {
   el('btnCalcularM2').addEventListener('click', calcularM2UI);
   el('btnLimparM2').addEventListener('click', () => {
     el<HTMLSelectElement>('modoM2').value = 'densidade';
-    ['areaHa', 'totalPovoado', 'animaisM2'].forEach(id => inp(id).value = '');
+    ['areaHa', 'totalPovoado', 'animaisM2'].forEach(id => { inp(id).value = ''; });
     el('resultadoM2').innerHTML = '';
     el('campoDensidade').style.display = 'block';
     el('campoPovoamento').style.display = 'none';

@@ -7,6 +7,7 @@
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#066b63" />
     <link rel="apple-touch-icon" href="icon192.png" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header class="header">
@@ -37,7 +38,6 @@
     <main class="content">
       <section class="card" id="cardBiomassa">
         <h2 class="card-title">🦐 Calculadora de Biomassa</h2>
-
         <div class="field">
           <label for="populacao">População inicial</label>
           <input class="input-base" type="text" id="populacao" placeholder="Ex: 200.000" inputmode="numeric" />
@@ -56,7 +56,6 @@
             <span class="unidade">g</span>
           </div>
         </div>
-
         <button class="btn-primary" id="btnCalcular">Calcular</button>
         <button class="btn-ghost" id="btnLimpar">Limpar</button>
         <div id="resultado" class="resultado"></div>
@@ -64,7 +63,6 @@
 
       <section class="card" id="cardM2" style="display:none">
         <h2 class="card-title">📐 Animais por m²</h2>
-
         <div class="field">
           <label for="modoM2">Modo de cálculo</label>
           <select class="input-base" id="modoM2">
@@ -91,7 +89,6 @@
             <input class="input-base" type="number" id="animaisM2" placeholder="Ex: 20" />
           </div>
         </div>
-
         <button class="btn-primary" id="btnCalcularM2">Calcular</button>
         <button class="btn-ghost" id="btnLimparM2">Limpar</button>
         <div id="resultadoM2" class="resultado"></div>
