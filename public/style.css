@@ -16,7 +16,7 @@
 
 body {
   background: var(--verde-fundo);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   color: var(--texto);
   -webkit-font-smoothing: antialiased;
@@ -62,11 +62,11 @@ body {
   gap: 8px;
   cursor: pointer;
   transition: background 0.2s;
+  font-family: 'Poppins', sans-serif;
 }
 
 .lua-badge:active { background: rgba(255, 255, 255, 0.8); }
 
-/* LUA COM MOVIMENTO PENDULAR */
 .lua-emoji {
   font-size: 24px;
   line-height: 1;
@@ -145,7 +145,7 @@ body {
   border: none;
   border-bottom: 1px solid #f0f0f0;
   font-size: 15px;
-  font-family: inherit;
+  font-family: 'Poppins', sans-serif;
   color: #333;
   cursor: pointer;
   display: flex;
@@ -158,12 +158,12 @@ body {
 .dropdown-item:last-child { border-bottom: none; }
 .dropdown-item:hover { background: var(--verde-suave); color: var(--verde); }
 
-/* MODAL DA LUA */
+/* ── MODAL DA LUA — CÉU NOTURNO ── */
 .modal-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 200;
   align-items: flex-end;
   justify-content: center;
@@ -175,13 +175,112 @@ body {
 }
 
 .modal-card {
-  background: #fff;
-  border-radius: 24px 24px 0 0;
-  padding: 32px 24px 44px;
+  background: #07071a;
+  border-radius: 28px 28px 0 0;
+  padding: 32px 24px 48px;
   width: 100%;
   max-width: 440px;
   position: relative;
+  overflow: hidden;
   animation: slideUp 0.3s ease;
+}
+
+/* Estrelas — camada 1 (pontos maiores) */
+.modal-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px; height: 2px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow:
+    18px 28px 0 0 rgba(255,255,255,0.9),
+    55px 14px 0 0 rgba(255,255,255,0.7),
+    98px 38px 0 0 rgba(255,255,255,0.85),
+    142px 18px 0 0 rgba(255,255,255,0.6),
+    188px 42px 0 0 rgba(255,255,255,0.9),
+    232px 12px 0 0 rgba(255,255,255,0.75),
+    275px 35px 0 0 rgba(255,255,255,0.8),
+    318px 22px 0 0 rgba(255,255,255,0.65),
+    362px 45px 0 0 rgba(255,255,255,0.9),
+    28px 75px 0 0 rgba(255,255,255,0.7),
+    80px 65px 0 0 rgba(255,255,255,0.85),
+    125px 88px 0 0 rgba(255,255,255,0.6),
+    172px 62px 0 0 rgba(255,255,255,0.9),
+    218px 82px 0 0 rgba(255,255,255,0.7),
+    262px 58px 0 0 rgba(255,255,255,0.8),
+    308px 78px 0 0 rgba(255,255,255,0.65),
+    352px 68px 0 0 rgba(255,255,255,0.85),
+    12px 125px 0 0 rgba(255,255,255,0.75),
+    65px 108px 0 0 rgba(255,255,255,0.9),
+    115px 138px 0 0 rgba(255,255,255,0.6),
+    162px 112px 0 0 rgba(255,255,255,0.85),
+    208px 132px 0 0 rgba(255,255,255,0.7),
+    255px 105px 0 0 rgba(255,255,255,0.9),
+    298px 128px 0 0 rgba(255,255,255,0.65),
+    345px 118px 0 0 rgba(255,255,255,0.8),
+    388px 92px 0 0 rgba(255,255,255,0.75),
+    38px 165px 0 0 rgba(255,255,255,0.85),
+    88px 152px 0 0 rgba(255,255,255,0.7),
+    138px 172px 0 0 rgba(255,255,255,0.9),
+    185px 158px 0 0 rgba(255,255,255,0.6),
+    228px 175px 0 0 rgba(255,255,255,0.8),
+    272px 162px 0 0 rgba(255,255,255,0.75),
+    318px 178px 0 0 rgba(255,255,255,0.85),
+    368px 155px 0 0 rgba(255,255,255,0.7);
+  animation: piscarA 4s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Estrelas — camada 2 (pontos menores) */
+.modal-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 1px; height: 1px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow:
+    42px 22px 0 0 rgba(255,255,255,0.5),
+    88px 48px 0 0 rgba(255,255,255,0.4),
+    135px 28px 0 0 rgba(255,255,255,0.6),
+    178px 52px 0 0 rgba(255,255,255,0.45),
+    222px 32px 0 0 rgba(255,255,255,0.55),
+    268px 48px 0 0 rgba(255,255,255,0.4),
+    312px 25px 0 0 rgba(255,255,255,0.6),
+    355px 55px 0 0 rgba(255,255,255,0.5),
+    52px 95px 0 0 rgba(255,255,255,0.45),
+    102px 78px 0 0 rgba(255,255,255,0.6),
+    148px 98px 0 0 rgba(255,255,255,0.4),
+    195px 72px 0 0 rgba(255,255,255,0.55),
+    242px 92px 0 0 rgba(255,255,255,0.45),
+    288px 68px 0 0 rgba(255,255,255,0.6),
+    335px 88px 0 0 rgba(255,255,255,0.4),
+    22px 142px 0 0 rgba(255,255,255,0.55),
+    72px 118px 0 0 rgba(255,255,255,0.5),
+    122px 148px 0 0 rgba(255,255,255,0.4),
+    168px 122px 0 0 rgba(255,255,255,0.6),
+    215px 145px 0 0 rgba(255,255,255,0.45),
+    260px 118px 0 0 rgba(255,255,255,0.55),
+    305px 142px 0 0 rgba(255,255,255,0.4),
+    350px 125px 0 0 rgba(255,255,255,0.6),
+    392px 108px 0 0 rgba(255,255,255,0.5);
+  animation: piscarB 5s ease-in-out infinite alternate-reverse;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes piscarA {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.4; }
+  100% { opacity: 0.9; }
+}
+
+@keyframes piscarB {
+  0%   { opacity: 0.8; }
+  50%  { opacity: 0.2; }
+  100% { opacity: 1; }
 }
 
 @keyframes slideUp {
@@ -193,17 +292,18 @@ body {
   position: absolute;
   top: 16px;
   right: 16px;
-  background: var(--cinza-1);
-  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   width: 32px;
   height: 32px;
   font-size: 14px;
   cursor: pointer;
-  color: #666;
+  color: rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .modal-lua-emoji {
@@ -213,20 +313,27 @@ body {
   margin-bottom: 12px;
   display: block;
   animation: balanarLua 3s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
 }
 
 .modal-fase {
   text-align: center;
   font-size: 22px;
   font-weight: 800;
-  color: var(--verde);
+  color: #fff;
   margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .modal-info {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: relative;
+  z-index: 1;
 }
 
 .modal-item {
@@ -234,7 +341,8 @@ body {
   align-items: center;
   gap: 14px;
   padding: 14px 16px;
-  background: var(--cinza-1);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
 }
 
@@ -243,8 +351,8 @@ body {
 .modal-item-label {
   display: block;
   font-size: 11px;
-  font-weight: 700;
-  color: var(--texto-suave);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.8px;
   margin-bottom: 3px;
@@ -254,7 +362,7 @@ body {
   display: block;
   font-size: 15px;
   font-weight: 700;
-  color: var(--texto);
+  color: #fff;
 }
 
 /* CONTENT */
@@ -287,7 +395,7 @@ body {
 .field label {
   display: block;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--texto-suave);
   text-transform: uppercase;
   letter-spacing: 0.9px;
@@ -299,8 +407,8 @@ body {
   padding: 13px 15px;
   border: 2px solid var(--cinza-2);
   border-radius: 12px;
-  font-size: 16px;
-  font-family: inherit;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
   background: var(--cinza-1);
   color: var(--texto);
   outline: none;
@@ -333,8 +441,8 @@ body {
   padding: 13px 15px;
   border: none;
   background: transparent;
-  font-size: 16px;
-  font-family: inherit;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
   color: var(--texto);
   outline: none;
   min-width: 0;
@@ -359,9 +467,9 @@ body {
   color: #fff;
   border: none;
   border-radius: 14px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
-  font-family: inherit;
+  font-family: 'Poppins', sans-serif;
   cursor: pointer;
   letter-spacing: 0.4px;
   transition: background 0.2s, transform 0.1s;
@@ -380,7 +488,7 @@ body {
   color: var(--texto-suave);
   border: none;
   font-size: 14px;
-  font-family: inherit;
+  font-family: 'Poppins', sans-serif;
   cursor: pointer;
   margin-top: 8px;
   border-radius: 10px;
@@ -403,7 +511,7 @@ body {
 
 .resultado-card .label {
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -470,7 +578,7 @@ body {
 .ticker-item {
   color: rgba(255, 255, 255, 0.9);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
   padding: 0 28px;
