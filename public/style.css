@@ -9,17 +9,194 @@
   --texto: #212529;
   --texto-suave: #6c757d;
   --vermelho: #e53e3e;
-  --sombra: 0 2px 20px rgba(6, 107, 99, 0.1);
+  --sombra: 0 2px 20px rgba(6, 107, 99, 0.15);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: var(--verde-fundo);
+  background: #07071a;
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   color: var(--texto);
   -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* ESTRELAS FUNDO — camada 1 (grandes, brilhantes) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 2px; height: 2px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow:
+    15px 20px 2px 1px rgba(255,255,255,0.95),
+    55px 45px 1px 0 rgba(255,255,255,0.85),
+    95px 15px 2px 1px rgba(255,255,255,0.9),
+    145px 35px 1px 0 rgba(255,255,255,0.8),
+    185px 10px 2px 1px rgba(255,255,255,0.95),
+    225px 42px 1px 0 rgba(255,255,255,0.85),
+    268px 22px 2px 1px rgba(255,255,255,0.9),
+    308px 48px 1px 0 rgba(255,255,255,0.8),
+    348px 18px 2px 1px rgba(255,255,255,0.95),
+    388px 38px 1px 0 rgba(255,255,255,0.85),
+    25px 82px 2px 1px rgba(255,255,255,0.9),
+    72px 68px 1px 0 rgba(255,255,255,0.8),
+    118px 92px 2px 1px rgba(255,255,255,0.95),
+    162px 72px 1px 0 rgba(255,255,255,0.85),
+    208px 88px 2px 1px rgba(255,255,255,0.9),
+    252px 62px 1px 0 rgba(255,255,255,0.8),
+    295px 82px 2px 1px rgba(255,255,255,0.95),
+    338px 65px 1px 0 rgba(255,255,255,0.85),
+    382px 90px 2px 1px rgba(255,255,255,0.9),
+    10px 138px 2px 1px rgba(255,255,255,0.95),
+    58px 118px 1px 0 rgba(255,255,255,0.85),
+    108px 142px 2px 1px rgba(255,255,255,0.9),
+    155px 122px 1px 0 rgba(255,255,255,0.8),
+    202px 138px 2px 1px rgba(255,255,255,0.95),
+    248px 112px 1px 0 rgba(255,255,255,0.85),
+    292px 132px 2px 1px rgba(255,255,255,0.9),
+    338px 148px 1px 0 rgba(255,255,255,0.8),
+    378px 118px 2px 1px rgba(255,255,255,0.95),
+    35px 188px 2px 1px rgba(255,255,255,0.9),
+    82px 202px 1px 0 rgba(255,255,255,0.85),
+    132px 178px 2px 1px rgba(255,255,255,0.95),
+    178px 198px 1px 0 rgba(255,255,255,0.8),
+    222px 182px 2px 1px rgba(255,255,255,0.9),
+    268px 198px 1px 0 rgba(255,255,255,0.85),
+    312px 178px 2px 1px rgba(255,255,255,0.95),
+    358px 188px 1px 0 rgba(255,255,255,0.8),
+    22px 242px 2px 1px rgba(255,255,255,0.9),
+    68px 228px 1px 0 rgba(255,255,255,0.85),
+    118px 252px 2px 1px rgba(255,255,255,0.95),
+    162px 238px 1px 0 rgba(255,255,255,0.8),
+    212px 248px 2px 1px rgba(255,255,255,0.9),
+    258px 228px 1px 0 rgba(255,255,255,0.85),
+    302px 242px 2px 1px rgba(255,255,255,0.95),
+    348px 232px 1px 0 rgba(255,255,255,0.8),
+    392px 258px 2px 1px rgba(255,255,255,0.9),
+    48px 298px 2px 1px rgba(255,255,255,0.95),
+    92px 282px 1px 0 rgba(255,255,255,0.85),
+    142px 302px 2px 1px rgba(255,255,255,0.9),
+    188px 288px 1px 0 rgba(255,255,255,0.8),
+    232px 298px 2px 1px rgba(255,255,255,0.95),
+    278px 272px 1px 0 rgba(255,255,255,0.85),
+    322px 292px 2px 1px rgba(255,255,255,0.9),
+    362px 308px 1px 0 rgba(255,255,255,0.8),
+    18px 348px 2px 1px rgba(255,255,255,0.95),
+    62px 332px 1px 0 rgba(255,255,255,0.85),
+    112px 352px 2px 1px rgba(255,255,255,0.9),
+    158px 342px 1px 0 rgba(255,255,255,0.8),
+    202px 358px 2px 1px rgba(255,255,255,0.95),
+    248px 338px 1px 0 rgba(255,255,255,0.85),
+    292px 348px 2px 1px rgba(255,255,255,0.9),
+    338px 332px 1px 0 rgba(255,255,255,0.8),
+    382px 362px 2px 1px rgba(255,255,255,0.95),
+    32px 402px 2px 1px rgba(255,255,255,0.9),
+    78px 388px 1px 0 rgba(255,255,255,0.85),
+    128px 408px 2px 1px rgba(255,255,255,0.95),
+    172px 398px 1px 0 rgba(255,255,255,0.8),
+    218px 412px 2px 1px rgba(255,255,255,0.9),
+    262px 392px 1px 0 rgba(255,255,255,0.85),
+    308px 408px 2px 1px rgba(255,255,255,0.95),
+    352px 398px 1px 0 rgba(255,255,255,0.8);
+  animation: piscarA 4s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ESTRELAS FUNDO — camada 2 (menores) */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 1px; height: 1px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow:
+    40px 28px 0 0 rgba(255,255,255,0.6),
+    88px 52px 0 0 rgba(255,255,255,0.5),
+    135px 28px 0 0 rgba(255,255,255,0.65),
+    178px 52px 0 0 rgba(255,255,255,0.5),
+    222px 32px 0 0 rgba(255,255,255,0.6),
+    268px 48px 0 0 rgba(255,255,255,0.55),
+    312px 28px 0 0 rgba(255,255,255,0.65),
+    355px 55px 0 0 rgba(255,255,255,0.5),
+    48px 98px 0 0 rgba(255,255,255,0.6),
+    98px 78px 0 0 rgba(255,255,255,0.55),
+    145px 102px 0 0 rgba(255,255,255,0.65),
+    192px 78px 0 0 rgba(255,255,255,0.5),
+    238px 95px 0 0 rgba(255,255,255,0.6),
+    285px 72px 0 0 rgba(255,255,255,0.55),
+    332px 92px 0 0 rgba(255,255,255,0.65),
+    375px 105px 0 0 rgba(255,255,255,0.5),
+    22px 152px 0 0 rgba(255,255,255,0.6),
+    72px 128px 0 0 rgba(255,255,255,0.55),
+    122px 155px 0 0 rgba(255,255,255,0.65),
+    168px 132px 0 0 rgba(255,255,255,0.5),
+    215px 148px 0 0 rgba(255,255,255,0.6),
+    260px 125px 0 0 rgba(255,255,255,0.55),
+    305px 145px 0 0 rgba(255,255,255,0.65),
+    352px 128px 0 0 rgba(255,255,255,0.5),
+    395px 115px 0 0 rgba(255,255,255,0.6),
+    55px 208px 0 0 rgba(255,255,255,0.55),
+    102px 192px 0 0 rgba(255,255,255,0.65),
+    148px 212px 0 0 rgba(255,255,255,0.5),
+    195px 205px 0 0 rgba(255,255,255,0.6),
+    242px 218px 0 0 rgba(255,255,255,0.55),
+    288px 198px 0 0 rgba(255,255,255,0.65),
+    335px 208px 0 0 rgba(255,255,255,0.5),
+    375px 222px 0 0 rgba(255,255,255,0.6),
+    28px 265px 0 0 rgba(255,255,255,0.55),
+    78px 248px 0 0 rgba(255,255,255,0.65),
+    128px 268px 0 0 rgba(255,255,255,0.5),
+    172px 255px 0 0 rgba(255,255,255,0.6),
+    218px 265px 0 0 rgba(255,255,255,0.55),
+    265px 248px 0 0 rgba(255,255,255,0.65),
+    312px 258px 0 0 rgba(255,255,255,0.5),
+    358px 272px 0 0 rgba(255,255,255,0.6),
+    45px 318px 0 0 rgba(255,255,255,0.55),
+    92px 302px 0 0 rgba(255,255,255,0.65),
+    142px 322px 0 0 rgba(255,255,255,0.5),
+    188px 312px 0 0 rgba(255,255,255,0.6),
+    235px 318px 0 0 rgba(255,255,255,0.55),
+    282px 302px 0 0 rgba(255,255,255,0.65),
+    328px 318px 0 0 rgba(255,255,255,0.5),
+    372px 328px 0 0 rgba(255,255,255,0.6),
+    22px 368px 0 0 rgba(255,255,255,0.55),
+    68px 355px 0 0 rgba(255,255,255,0.65),
+    118px 372px 0 0 rgba(255,255,255,0.5),
+    165px 362px 0 0 rgba(255,255,255,0.6),
+    212px 372px 0 0 rgba(255,255,255,0.55),
+    258px 358px 0 0 rgba(255,255,255,0.65),
+    305px 368px 0 0 rgba(255,255,255,0.5),
+    352px 378px 0 0 rgba(255,255,255,0.6),
+    395px 362px 0 0 rgba(255,255,255,0.55),
+    42px 418px 0 0 rgba(255,255,255,0.65),
+    92px 405px 0 0 rgba(255,255,255,0.5),
+    142px 422px 0 0 rgba(255,255,255,0.6),
+    188px 412px 0 0 rgba(255,255,255,0.55),
+    235px 422px 0 0 rgba(255,255,255,0.65),
+    282px 408px 0 0 rgba(255,255,255,0.5),
+    328px 418px 0 0 rgba(255,255,255,0.6),
+    372px 408px 0 0 rgba(255,255,255,0.55);
+  animation: piscarB 6s ease-in-out infinite alternate-reverse;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes piscarA {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.3; }
+  100% { opacity: 0.9; }
+}
+
+@keyframes piscarB {
+  0%   { opacity: 0.7; }
+  50%  { opacity: 0.15; }
+  100% { opacity: 1; }
 }
 
 /* HEADER */
@@ -51,7 +228,6 @@ body {
   gap: 10px;
 }
 
-/* LUA BADGE */
 .lua-badge {
   background: rgba(255, 255, 255, 0.95);
   border: none;
@@ -119,7 +295,6 @@ body {
 
 .menu-btn:hover { background: rgba(255, 255, 255, 0.22); }
 
-/* DROPDOWN */
 .dropdown {
   display: none;
   position: absolute;
@@ -127,10 +302,11 @@ body {
   right: 16px;
   background: #fff;
   border-radius: 14px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   min-width: 220px;
   animation: fadeDown 0.18s ease;
+  z-index: 101;
 }
 
 @keyframes fadeDown {
@@ -158,7 +334,7 @@ body {
 .dropdown-item:last-child { border-bottom: none; }
 .dropdown-item:hover { background: var(--verde-suave); color: var(--verde); }
 
-/* ── MODAL DA LUA — CÉU NOTURNO ── */
+/* MODAL DA LUA */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -185,7 +361,6 @@ body {
   animation: slideUp 0.3s ease;
 }
 
-/* Estrelas — camada 1 (pontos maiores) */
 .modal-card::before {
   content: '';
   position: absolute;
@@ -194,46 +369,45 @@ body {
   background: transparent;
   border-radius: 50%;
   box-shadow:
-    18px 28px 0 0 rgba(255,255,255,0.9),
-    55px 14px 0 0 rgba(255,255,255,0.7),
-    98px 38px 0 0 rgba(255,255,255,0.85),
-    142px 18px 0 0 rgba(255,255,255,0.6),
-    188px 42px 0 0 rgba(255,255,255,0.9),
-    232px 12px 0 0 rgba(255,255,255,0.75),
-    275px 35px 0 0 rgba(255,255,255,0.8),
-    318px 22px 0 0 rgba(255,255,255,0.65),
-    362px 45px 0 0 rgba(255,255,255,0.9),
-    28px 75px 0 0 rgba(255,255,255,0.7),
-    80px 65px 0 0 rgba(255,255,255,0.85),
-    125px 88px 0 0 rgba(255,255,255,0.6),
-    172px 62px 0 0 rgba(255,255,255,0.9),
-    218px 82px 0 0 rgba(255,255,255,0.7),
-    262px 58px 0 0 rgba(255,255,255,0.8),
-    308px 78px 0 0 rgba(255,255,255,0.65),
-    352px 68px 0 0 rgba(255,255,255,0.85),
-    12px 125px 0 0 rgba(255,255,255,0.75),
-    65px 108px 0 0 rgba(255,255,255,0.9),
-    115px 138px 0 0 rgba(255,255,255,0.6),
-    162px 112px 0 0 rgba(255,255,255,0.85),
-    208px 132px 0 0 rgba(255,255,255,0.7),
-    255px 105px 0 0 rgba(255,255,255,0.9),
-    298px 128px 0 0 rgba(255,255,255,0.65),
-    345px 118px 0 0 rgba(255,255,255,0.8),
-    388px 92px 0 0 rgba(255,255,255,0.75),
-    38px 165px 0 0 rgba(255,255,255,0.85),
-    88px 152px 0 0 rgba(255,255,255,0.7),
-    138px 172px 0 0 rgba(255,255,255,0.9),
-    185px 158px 0 0 rgba(255,255,255,0.6),
-    228px 175px 0 0 rgba(255,255,255,0.8),
-    272px 162px 0 0 rgba(255,255,255,0.75),
-    318px 178px 0 0 rgba(255,255,255,0.85),
-    368px 155px 0 0 rgba(255,255,255,0.7);
-  animation: piscarA 4s ease-in-out infinite alternate;
+    18px 28px 2px 1px rgba(255,255,255,0.95),
+    55px 14px 2px 1px rgba(255,255,255,0.85),
+    98px 38px 2px 1px rgba(255,255,255,0.95),
+    142px 18px 2px 1px rgba(255,255,255,0.8),
+    188px 42px 2px 1px rgba(255,255,255,0.95),
+    232px 12px 2px 1px rgba(255,255,255,0.85),
+    275px 35px 2px 1px rgba(255,255,255,0.9),
+    318px 22px 2px 1px rgba(255,255,255,0.8),
+    362px 45px 2px 1px rgba(255,255,255,0.95),
+    28px 75px 2px 1px rgba(255,255,255,0.85),
+    80px 65px 2px 1px rgba(255,255,255,0.95),
+    125px 88px 2px 1px rgba(255,255,255,0.8),
+    172px 62px 2px 1px rgba(255,255,255,0.95),
+    218px 82px 2px 1px rgba(255,255,255,0.85),
+    262px 58px 2px 1px rgba(255,255,255,0.9),
+    308px 78px 2px 1px rgba(255,255,255,0.8),
+    352px 68px 2px 1px rgba(255,255,255,0.95),
+    12px 125px 2px 1px rgba(255,255,255,0.85),
+    65px 108px 2px 1px rgba(255,255,255,0.95),
+    115px 138px 2px 1px rgba(255,255,255,0.8),
+    162px 112px 2px 1px rgba(255,255,255,0.95),
+    208px 132px 2px 1px rgba(255,255,255,0.85),
+    255px 105px 2px 1px rgba(255,255,255,0.9),
+    298px 128px 2px 1px rgba(255,255,255,0.8),
+    345px 118px 2px 1px rgba(255,255,255,0.95),
+    388px 92px 2px 1px rgba(255,255,255,0.85),
+    38px 165px 2px 1px rgba(255,255,255,0.95),
+    88px 152px 2px 1px rgba(255,255,255,0.85),
+    138px 172px 2px 1px rgba(255,255,255,0.9),
+    185px 158px 2px 1px rgba(255,255,255,0.8),
+    228px 175px 2px 1px rgba(255,255,255,0.95),
+    272px 162px 2px 1px rgba(255,255,255,0.85),
+    318px 178px 2px 1px rgba(255,255,255,0.9),
+    368px 155px 2px 1px rgba(255,255,255,0.8);
+  animation: piscarA 3s ease-in-out infinite alternate;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Estrelas — camada 2 (pontos menores) */
 .modal-card::after {
   content: '';
   position: absolute;
@@ -242,45 +416,33 @@ body {
   background: transparent;
   border-radius: 50%;
   box-shadow:
-    42px 22px 0 0 rgba(255,255,255,0.5),
-    88px 48px 0 0 rgba(255,255,255,0.4),
-    135px 28px 0 0 rgba(255,255,255,0.6),
-    178px 52px 0 0 rgba(255,255,255,0.45),
-    222px 32px 0 0 rgba(255,255,255,0.55),
-    268px 48px 0 0 rgba(255,255,255,0.4),
-    312px 25px 0 0 rgba(255,255,255,0.6),
+    42px 22px 0 0 rgba(255,255,255,0.6),
+    88px 48px 0 0 rgba(255,255,255,0.5),
+    135px 28px 0 0 rgba(255,255,255,0.65),
+    178px 52px 0 0 rgba(255,255,255,0.5),
+    222px 32px 0 0 rgba(255,255,255,0.6),
+    268px 48px 0 0 rgba(255,255,255,0.55),
+    312px 25px 0 0 rgba(255,255,255,0.65),
     355px 55px 0 0 rgba(255,255,255,0.5),
-    52px 95px 0 0 rgba(255,255,255,0.45),
-    102px 78px 0 0 rgba(255,255,255,0.6),
-    148px 98px 0 0 rgba(255,255,255,0.4),
-    195px 72px 0 0 rgba(255,255,255,0.55),
-    242px 92px 0 0 rgba(255,255,255,0.45),
-    288px 68px 0 0 rgba(255,255,255,0.6),
-    335px 88px 0 0 rgba(255,255,255,0.4),
-    22px 142px 0 0 rgba(255,255,255,0.55),
-    72px 118px 0 0 rgba(255,255,255,0.5),
-    122px 148px 0 0 rgba(255,255,255,0.4),
-    168px 122px 0 0 rgba(255,255,255,0.6),
-    215px 145px 0 0 rgba(255,255,255,0.45),
+    52px 95px 0 0 rgba(255,255,255,0.6),
+    102px 78px 0 0 rgba(255,255,255,0.55),
+    148px 98px 0 0 rgba(255,255,255,0.65),
+    195px 72px 0 0 rgba(255,255,255,0.5),
+    242px 92px 0 0 rgba(255,255,255,0.6),
+    288px 68px 0 0 rgba(255,255,255,0.55),
+    335px 88px 0 0 rgba(255,255,255,0.65),
+    22px 142px 0 0 rgba(255,255,255,0.6),
+    72px 118px 0 0 rgba(255,255,255,0.55),
+    122px 148px 0 0 rgba(255,255,255,0.65),
+    168px 122px 0 0 rgba(255,255,255,0.5),
+    215px 145px 0 0 rgba(255,255,255,0.6),
     260px 118px 0 0 rgba(255,255,255,0.55),
-    305px 142px 0 0 rgba(255,255,255,0.4),
+    305px 142px 0 0 rgba(255,255,255,0.65),
     350px 125px 0 0 rgba(255,255,255,0.6),
     392px 108px 0 0 rgba(255,255,255,0.5);
   animation: piscarB 5s ease-in-out infinite alternate-reverse;
   pointer-events: none;
   z-index: 0;
-}
-
-@keyframes piscarA {
-  0%   { opacity: 1; }
-  50%  { opacity: 0.4; }
-  100% { opacity: 0.9; }
-}
-
-@keyframes piscarB {
-  0%   { opacity: 0.8; }
-  50%  { opacity: 0.2; }
-  100% { opacity: 1; }
 }
 
 @keyframes slideUp {
@@ -290,16 +452,14 @@ body {
 
 .modal-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  top: 16px; right: 16px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 32px; height: 32px;
   font-size: 14px;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255,255,255,0.8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -325,7 +485,7 @@ body {
   margin-bottom: 24px;
   position: relative;
   z-index: 1;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  text-shadow: 0 0 20px rgba(255,255,255,0.3);
 }
 
 .modal-info {
@@ -341,8 +501,8 @@ body {
   align-items: center;
   gap: 14px;
   padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 14px;
 }
 
@@ -352,7 +512,7 @@ body {
   display: block;
   font-size: 11px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255,255,255,0.5);
   text-transform: uppercase;
   letter-spacing: 0.8px;
   margin-bottom: 3px;
@@ -370,6 +530,8 @@ body {
   padding: 20px 16px 90px;
   max-width: 440px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .card {
@@ -476,10 +638,7 @@ body {
   margin-top: 6px;
 }
 
-.btn-primary:active {
-  transform: scale(0.98);
-  background: #c53030;
-}
+.btn-primary:active { transform: scale(0.98); background: #c53030; }
 
 .btn-ghost {
   width: 100%;
@@ -559,14 +718,12 @@ body {
 /* TICKER */
 .ticker-wrap {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   background: linear-gradient(90deg, var(--verde-escuro), var(--verde-claro), var(--verde-escuro));
   padding: 10px 0;
   overflow: hidden;
   z-index: 50;
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.3);
 }
 
 .ticker {
@@ -576,7 +733,7 @@ body {
 }
 
 .ticker-item {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255,255,255,0.9);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 3px;
@@ -586,7 +743,7 @@ body {
 }
 
 .ticker-item .dot {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255,255,255,0.35);
   margin: 0 10px;
 }
 
