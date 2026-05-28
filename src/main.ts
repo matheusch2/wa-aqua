@@ -142,6 +142,20 @@ function codigoClimaEmoji(code: number): string {
   return '⛈️';
 }
 
+function codigoClimaDesc(code: number): string {
+  if (code === 0) return 'Limpo';
+  if (code === 1) return 'Quase limpo';
+  if (code === 2) return 'Parcialmente nublado';
+  if (code <= 3) return 'Nublado';
+  if (code <= 48) return 'Neblina';
+  if (code <= 55) return 'Garoa';
+  if (code <= 67) return 'Chuvoso';
+  if (code <= 77) return 'Neve';
+  if (code <= 82) return 'Chuva forte';
+  if (code <= 86) return 'Neve forte';
+  return 'Tempestade';
+}
+
 async function carregarTemperatura(): Promise<void> {
   if (!navigator.geolocation) return;
   navigator.geolocation.getCurrentPosition(
@@ -152,9 +166,10 @@ async function carregarTemperatura(): Promise<void> {
         const data = await (await fetch(url)).json();
         const temp = Math.round(data.current.temperature_2m);
         const code = data.current.weathercode as number;
-        el('tempEmoji').textContent = codigoClimaEmoji(code);
-        el('tempValor').textContent = `${temp}°C`;
-        el('tempBadge').style.display = 'flex';
+        el('climaEmoji').textContent = codigoClimaEmoji(code);
+        el('climaTemp').textContent = `${temp}°C`;
+        el('climaDesc').textContent = codigoClimaDesc(code);
+        el('climaBadge').style.display = 'flex';
       } catch { /* localização obtida mas API falhou */ }
     },
     () => { /* usuário negou localização */ }

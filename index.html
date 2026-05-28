@@ -19,20 +19,28 @@
     </div>
     <header class="header">
       <div class="header-logo">
-        <h1>WA Aqua</h1>
+        <h1>WA AQUA</h1>
+        <svg class="logo-ondas" viewBox="0 0 80 10" preserveAspectRatio="none">
+          <path d="M0 5 Q5 1 10 5 Q15 9 20 5 Q25 1 30 5 Q35 9 40 5 Q45 1 50 5 Q55 9 60 5 Q65 1 70 5 Q75 9 80 5"
+                stroke="rgba(0,210,190,0.85)" stroke-width="2" fill="none"/>
+        </svg>
       </div>
       <div class="header-right">
+        <div class="clima-badge" id="climaBadge" style="display:none">
+          <span class="clima-icone" id="climaEmoji">☀️</span>
+          <div class="clima-divider"></div>
+          <div class="clima-info">
+            <span class="clima-temp" id="climaTemp">--°</span>
+            <span class="clima-desc" id="climaDesc">--</span>
+          </div>
+        </div>
         <button class="lua-badge" id="luaBadge">
-          <span class="lua-emoji" id="luaEmoji">🌕</span>
+          <span class="lua-icone" id="luaEmoji">🌕</span>
           <div class="lua-info">
             <span class="lua-nome" id="luaNome">Lua Cheia</span>
             <span class="lua-sub" id="luaSub">carregando...</span>
           </div>
         </button>
-        <div class="temp-badge" id="tempBadge" style="display:none">
-          <span class="temp-emoji" id="tempEmoji">🌡️</span>
-          <span class="temp-valor" id="tempValor">--°C</span>
-        </div>
         <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
       </div>
       <nav class="dropdown" id="dropdown">
