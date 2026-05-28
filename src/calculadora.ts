@@ -9,10 +9,15 @@ const TABELA: Array<{ peso: number; taxa: number }> = [
   { peso: 15, taxa: 2.92 }, { peso: 16, taxa: 2.88 },
   { peso: 17, taxa: 2.79 }, { peso: 18, taxa: 2.65 },
   { peso: 19, taxa: 2.57 }, { peso: 20, taxa: 2.39 },
+  { peso: 21, taxa: 1.80 }, { peso: 22, taxa: 1.60 },
+  { peso: 23, taxa: 1.50 }, { peso: 24, taxa: 1.40 },
+  { peso: 25, taxa: 1.50 }, { peso: 26, taxa: 1.30 },
+  { peso: 27, taxa: 1.30 }, { peso: 28, taxa: 1.30 },
+  { peso: 29, taxa: 1.30 }, { peso: 30, taxa: 1.30 },
 ];
 
 function obterTaxa(peso: number): number | null {
-  if (peso < 1 || peso > 20) return null;
+  if (peso < 1 || peso > 30) return null;
   for (const item of TABELA) {
     if (peso === item.peso) return item.taxa;
   }

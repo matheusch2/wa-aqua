@@ -74,7 +74,7 @@ function calcularBiomassaUI(): void {
 
   const res = calcularBiomassa(populacao, consumo, peso);
   if (!res) {
-    div.innerHTML = '<p class="aviso">Peso fora da tabela (1g a 20g).</p>';
+    div.innerHTML = '<p class="aviso">Peso fora da tabela (1g a 30g).</p>';
     return;
   }
 
