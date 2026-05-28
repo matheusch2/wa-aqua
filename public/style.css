@@ -142,6 +142,7 @@ body::after {
   display: block;
   width: 56px;
   height: 7px;
+  margin: 0 auto;
 }
 
 .header-right {
@@ -541,7 +542,7 @@ body::after {
   padding: 13px 15px;
   border: 2px solid var(--cinza-2);
   border-radius: 12px;
-  font-size: 15px;
+  font-size: 16px;
   font-family: 'Poppins', sans-serif;
   background: var(--cinza-1);
   color: var(--texto);
@@ -575,7 +576,7 @@ body::after {
   padding: 13px 15px;
   border: none;
   background: transparent;
-  font-size: 15px;
+  font-size: 16px;
   font-family: 'Poppins', sans-serif;
   color: var(--texto);
   outline: none;
