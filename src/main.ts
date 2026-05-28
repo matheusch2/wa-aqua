@@ -131,8 +131,39 @@ function calcularM2UI(): void {
   }
 }
 
+function codigoClimaEmoji(code: number): string {
+  if (code === 0) return '☀️';
+  if (code <= 2) return '⛅';
+  if (code <= 3) return '☁️';
+  if (code <= 48) return '🌫️';
+  if (code <= 67) return '🌧️';
+  if (code <= 77) return '❄️';
+  if (code <= 82) return '🌧️';
+  return '⛈️';
+}
+
+async function carregarTemperatura(): Promise<void> {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      const { latitude, longitude } = pos.coords;
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weathercode&temperature_unit=celsius`;
+        const data = await (await fetch(url)).json();
+        const temp = Math.round(data.current.temperature_2m);
+        const code = data.current.weathercode as number;
+        el('tempEmoji').textContent = codigoClimaEmoji(code);
+        el('tempValor').textContent = `${temp}°C`;
+        el('tempBadge').style.display = 'flex';
+      } catch { /* localização obtida mas API falhou */ }
+    },
+    () => { /* usuário negou localização */ }
+  );
+}
+
 function init(): void {
   atualizarLua();
+  carregarTemperatura();
 
   const now = new Date();
   const midnight = new Date(now);
