@@ -115,7 +115,7 @@ body::after {
 /* HEADER */
 .header {
   background: linear-gradient(135deg, var(--verde-escuro) 0%, var(--verde-claro) 100%);
-  padding: 12px 14px;
+  padding: 10px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -123,14 +123,14 @@ body::after {
   position: sticky;
   top: 0;
   z-index: 100;
-  gap: 8px;
+  gap: 6px;
 }
 
 .header-logo { flex-shrink: 0; }
 
 .header-logo h1 {
   color: #fff;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -140,34 +140,36 @@ body::after {
 
 .logo-ondas {
   display: block;
-  width: 68px;
-  height: 8px;
+  width: 56px;
+  height: 7px;
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 5px;
   flex-shrink: 0;
+  min-width: 0;
 }
 
 /* CLIMA BADGE */
 .clima-badge {
   background: rgba(0, 0, 0, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 12px;
-  padding: 8px 11px;
+  border-radius: 10px;
+  padding: 6px 9px;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 7px;
   font-family: 'Poppins', sans-serif;
+  flex-shrink: 0;
 }
 
-.clima-icone { font-size: 26px; line-height: 1; }
+.clima-icone { font-size: 20px; line-height: 1; }
 
 .clima-divider {
   width: 1px;
-  height: 30px;
+  height: 24px;
   background: rgba(255, 255, 255, 0.3);
   flex-shrink: 0;
 }
@@ -175,14 +177,14 @@ body::after {
 .clima-info { display: flex; flex-direction: column; gap: 1px; }
 
 .clima-temp {
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 800;
   color: #fff;
   line-height: 1;
 }
 
 .clima-desc {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.75);
   white-space: nowrap;
@@ -192,20 +194,22 @@ body::after {
 .lua-badge {
   background: rgba(0, 0, 0, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 12px;
-  padding: 8px 11px;
+  border-radius: 10px;
+  padding: 6px 9px;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 7px;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
   transition: background 0.2s;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .lua-badge:active { background: rgba(0, 0, 0, 0.28); }
 
 .lua-icone {
-  font-size: 26px;
+  font-size: 22px;
   line-height: 1;
   display: inline-block;
   animation: balanarLua 3s ease-in-out infinite;
@@ -218,20 +222,29 @@ body::after {
   100% { transform: rotate(-14deg); }
 }
 
-.lua-info { display: flex; flex-direction: column; gap: 1px; }
+.lua-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  overflow: hidden;
+}
 
 .lua-nome {
   display: block;
   color: #fff;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lua-sub {
   display: block;
   color: rgba(255, 255, 255, 0.75);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -239,11 +252,11 @@ body::after {
 .menu-btn {
   background: rgba(0, 0, 0, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 10px;
+  border-radius: 9px;
   color: #fff;
-  font-size: 18px;
-  width: 40px;
-  height: 40px;
+  font-size: 16px;
+  width: 36px;
+  height: 36px;
   cursor: pointer;
   display: flex;
   align-items: center;
