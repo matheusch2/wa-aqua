@@ -156,16 +156,33 @@ function codigoClimaDesc(code: number): string {
   return 'Tempestade';
 }
 
+interface DiaPrevisao { data: string; max: number; min: number; code: number; }
+interface ClimaDados { cidade: string; temp: number; code: number; previsao: DiaPrevisao[]; }
+let climaDados: ClimaDados | null = null;
+
 async function carregarTemperatura(): Promise<void> {
   if (!navigator.geolocation) return;
   navigator.geolocation.getCurrentPosition(
     async (pos) => {
       const { latitude, longitude } = pos.coords;
       try {
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weathercode&temperature_unit=celsius`;
-        const data = await (await fetch(url)).json();
-        const temp = Math.round(data.current.temperature_2m);
-        const code = data.current.weathercode as number;
+        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&temperature_unit=celsius&timezone=auto`;
+        const geoUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+        const [weatherData, geoData] = await Promise.all([
+          (await fetch(weatherUrl)).json(),
+          (await fetch(geoUrl)).json(),
+        ]);
+        const temp = Math.round(weatherData.current.temperature_2m);
+        const code = weatherData.current.weathercode as number;
+        const addr = geoData.address as Record<string, string>;
+        const cidade = addr.city ?? addr.town ?? addr.village ?? addr.municipality ?? addr.county ?? 'Local';
+        const previsao: DiaPrevisao[] = (weatherData.daily.time as string[]).slice(0, 7).map((data: string, i: number) => ({
+          data,
+          max: Math.round((weatherData.daily.temperature_2m_max as number[])[i]),
+          min: Math.round((weatherData.daily.temperature_2m_min as number[])[i]),
+          code: (weatherData.daily.weathercode as number[])[i],
+        }));
+        climaDados = { cidade, temp, code, previsao };
         el('climaEmoji').textContent = codigoClimaEmoji(code);
         el('climaTemp').textContent = `${temp}°C`;
         el('climaDesc').textContent = codigoClimaDesc(code);
@@ -174,6 +191,34 @@ async function carregarTemperatura(): Promise<void> {
     },
     () => { /* usuário negou localização */ }
   );
+}
+
+function abrirModalClima(): void {
+  if (!climaDados) return;
+  const { cidade, temp, code, previsao } = climaDados;
+  el('climaModalEmoji').textContent = codigoClimaEmoji(code);
+  el('climaModalTemp').textContent = `${temp}°C`;
+  el('climaModalDesc').textContent = codigoClimaDesc(code);
+  el('climaModalCidade').textContent = cidade;
+  const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  el('climaPrevisao').innerHTML = previsao.map((d, i) => {
+    const date = new Date(d.data + 'T12:00:00');
+    const nomeDia = i === 0 ? 'Hoje' : i === 1 ? 'Amanhã' : dias[date.getDay()];
+    return `<div class="clima-dia">
+      <span class="clima-dia-nome">${nomeDia}</span>
+      <span class="clima-dia-icone">${codigoClimaEmoji(d.code)}</span>
+      <span class="clima-dia-desc">${codigoClimaDesc(d.code)}</span>
+      <div class="clima-dia-temps">
+        <span class="clima-dia-max">${d.max}°</span>
+        <span class="clima-dia-min">${d.min}°</span>
+      </div>
+    </div>`;
+  }).join('');
+  el('climaModal').classList.add('aberto');
+}
+
+function fecharModalClima(): void {
+  el('climaModal').classList.remove('aberto');
 }
 
 function init(): void {
@@ -187,6 +232,13 @@ function init(): void {
     atualizarLua();
     setInterval(atualizarLua, 24 * 60 * 60 * 1000);
   }, midnight.getTime() - now.getTime());
+
+  // Modal do clima
+  el('climaBadge').addEventListener('click', abrirModalClima);
+  el('fecharClima').addEventListener('click', fecharModalClima);
+  el('climaModal').addEventListener('click', (e) => {
+    if (e.target === el('climaModal')) fecharModalClima();
+  });
 
   // Modal da lua
   el('luaBadge').addEventListener('click', abrirModalLua);

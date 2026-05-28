@@ -724,3 +724,89 @@ body::after {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+
+/* MODAL DO CLIMA */
+.clima-modal-topo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.clima-modal-emoji { font-size: 72px; line-height: 1; }
+
+.clima-modal-info { display: flex; flex-direction: column; gap: 2px; }
+
+.clima-modal-temp {
+  font-size: 42px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.clima-modal-descricao {
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.clima-modal-cidade {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.clima-previsao {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  position: relative;
+  z-index: 1;
+}
+
+.clima-dia {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.clima-dia-nome {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  width: 56px;
+  flex-shrink: 0;
+}
+
+.clima-dia-icone {
+  font-size: 20px;
+  width: 26px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.clima-dia-desc {
+  font-size: 11px;
+  color: rgba(255,255,255,0.65);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clima-dia-temps { display: flex; gap: 8px; flex-shrink: 0; }
+
+.clima-dia-max { font-size: 14px; font-weight: 700; color: #fff; }
+
+.clima-dia-min { font-size: 14px; color: rgba(255,255,255,0.45); }
