@@ -3,6 +3,8 @@
   "target": {
     "namespace": "android_app",
     "package_name": "com.waaqua.app",
-    "sha256_cert_fingerprints": ["FINGERPRINT_AQUI"]
+    "sha256_cert_fingerprints": [
+      "3B:EF:B0:E4:44:2C:6C:A4:76:64:64:C5:E9:2A:61:A4:E8:CD:BB:5A:49:BF:CC:80:05:EE:F4:FF:F4:58:26:1F"
+    ]
   }
 }]

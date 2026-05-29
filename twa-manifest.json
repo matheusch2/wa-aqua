@@ -1,0 +1,43 @@
+{
+  "packageId": "com.waaqua.app",
+  "host": "matheusch2.github.io",
+  "name": "WA Aqua",
+  "launcherName": "WA Aqua",
+  "display": "standalone",
+  "orientation": "default",
+  "themeColor": "#066b63",
+  "themeColorDark": "#066b63",
+  "backgroundColor": "#f5f5f5",
+  "startUrl": "/wa-aqua/",
+  "iconUrl": "https://matheusch2.github.io/wa-aqua/icon512.png",
+  "maskableIconUrl": "https://matheusch2.github.io/wa-aqua/icon512.png",
+  "monochromeIconUrl": "https://matheusch2.github.io/wa-aqua/icon512.png",
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "signingKey": {
+    "path": "./waaqua.keystore",
+    "alias": "waaqua"
+  },
+  "splashScreenFadeOutDuration": 300,
+  "enableNotifications": false,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://matheusch2.github.io/wa-aqua/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": { "enabled": true },
+    "playBilling": { "enabled": false }
+  },
+  "alphaDependencies": { "enabled": false },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://matheusch2.github.io/wa-aqua/",
+  "minSdkVersion": 21,
+  "fingerprints": [
+    {
+      "name": "waaqua",
+      "value": "3B:EF:B0:E4:44:2C:6C:A4:76:64:64:C5:E9:2A:61:A4:E8:CD:BB:5A:49:BF:CC:80:05:EE:F4:FF:F4:58:26:1F"
+    }
+  ]
+}
