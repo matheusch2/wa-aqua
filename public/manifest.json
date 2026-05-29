@@ -7,7 +7,7 @@
   "scope": "/wa-aqua/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#eef5f4",
+  "background_color": "#f5f5f5",
   "theme_color": "#066b63",
   "categories": ["utilities", "productivity"],
   "icons": [
