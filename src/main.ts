@@ -299,9 +299,6 @@ function init(): void {
     el('campoPovoamento').style.display = 'none';
   });
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./serviceworker.js');
-  }
 }
 
 init();
