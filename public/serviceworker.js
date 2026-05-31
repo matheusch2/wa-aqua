@@ -1,4 +1,4 @@
-const CACHE = 'wa-aqua-v4';
+const CACHE = 'wa-aqua-v5';
 const BASE = '/wa-aqua/';
 const ARQUIVOS = [
   BASE,
