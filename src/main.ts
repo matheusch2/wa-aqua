@@ -291,6 +291,7 @@ function init(): void {
   inp('areaHa').addEventListener('input', function () { formatarAreaHa(this); });
   inp('totalPovoado').addEventListener('input', function () { formatarPopulacao(this); });
   inp('sobrevPopInicial').addEventListener('input', function () { formatarPopulacao(this); });
+  inp('sobrevBiomassa').addEventListener('input', function () { formatarPopulacao(this); });
 
   el('btnCalcular').addEventListener('click', calcularBiomassaUI);
   el('btnLimpar').addEventListener('click', () => {
@@ -300,7 +301,7 @@ function init(): void {
 
   el('btnCalcularSobrev').addEventListener('click', () => {
     const popInicial = parseFloat(inp('sobrevPopInicial').value.replace(/\./g, ''));
-    const biomassaKg = parseFloat(inp('sobrevBiomassa').value);
+    const biomassaKg = parseFloat(inp('sobrevBiomassa').value.replace(/\./g, '').replace(',', '.'));
     const pesoG = parseFloat(inp('sobrevPeso').value);
     const div = el('resultadoSobrev');
     if (!popInicial || !biomassaKg || !pesoG) {
@@ -311,11 +312,11 @@ function init(): void {
     const taxa = (popAtual / popInicial) * 100;
     div.innerHTML = `
       <div class="resultado-card principal">
-        <div class="label">Taxa de Sobrevivência</div>
+        <div class="label">Sobrevivência</div>
         <div class="valor">${fmt(taxa, 1)}%</div>
       </div>
       <div class="resultado-card secundario">
-        <div class="label">População atual estimada</div>
+        <div class="label">População final</div>
         <div class="valor">${Math.round(popAtual).toLocaleString('pt-BR')} animais</div>
       </div>`;
   });
