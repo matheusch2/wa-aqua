@@ -273,14 +273,55 @@ function init(): void {
     el('cardM2').style.display = 'block';
   });
 
+  // Toggle Biomassa / Sobrevivência
+  el('tabBiomassa').addEventListener('click', () => {
+    el('tabBiomassa').classList.add('calc-tab-ativo');
+    el('tabSobrevivencia').classList.remove('calc-tab-ativo');
+    el('secaoBiomassa').style.display = 'block';
+    el('secaoSobrevivencia').style.display = 'none';
+  });
+  el('tabSobrevivencia').addEventListener('click', () => {
+    el('tabSobrevivencia').classList.add('calc-tab-ativo');
+    el('tabBiomassa').classList.remove('calc-tab-ativo');
+    el('secaoSobrevivencia').style.display = 'block';
+    el('secaoBiomassa').style.display = 'none';
+  });
+
   inp('populacao').addEventListener('input', function () { formatarPopulacao(this); });
   inp('areaHa').addEventListener('input', function () { formatarAreaHa(this); });
   inp('totalPovoado').addEventListener('input', function () { formatarPopulacao(this); });
+  inp('sobrevPopInicial').addEventListener('input', function () { formatarPopulacao(this); });
 
   el('btnCalcular').addEventListener('click', calcularBiomassaUI);
   el('btnLimpar').addEventListener('click', () => {
     ['populacao', 'consumo', 'peso'].forEach(id => { inp(id).value = ''; });
     el('resultado').innerHTML = '';
+  });
+
+  el('btnCalcularSobrev').addEventListener('click', () => {
+    const popInicial = parseFloat(inp('sobrevPopInicial').value.replace(/\./g, ''));
+    const biomassaKg = parseFloat(inp('sobrevBiomassa').value);
+    const pesoG = parseFloat(inp('sobrevPeso').value);
+    const div = el('resultadoSobrev');
+    if (!popInicial || !biomassaKg || !pesoG) {
+      div.innerHTML = '<p class="aviso">Preencha todos os campos.</p>';
+      return;
+    }
+    const popAtual = (biomassaKg * 1000) / pesoG;
+    const taxa = (popAtual / popInicial) * 100;
+    div.innerHTML = `
+      <div class="resultado-card principal">
+        <div class="label">Taxa de Sobrevivência</div>
+        <div class="valor">${fmt(taxa, 1)}%</div>
+      </div>
+      <div class="resultado-card secundario">
+        <div class="label">População atual estimada</div>
+        <div class="valor">${Math.round(popAtual).toLocaleString('pt-BR')} animais</div>
+      </div>`;
+  });
+  el('btnLimparSobrev').addEventListener('click', () => {
+    ['sobrevPopInicial', 'sobrevBiomassa', 'sobrevPeso'].forEach(id => { inp(id).value = ''; });
+    el('resultadoSobrev').innerHTML = '';
   });
 
   el<HTMLSelectElement>('modoM2').addEventListener('change', () => {

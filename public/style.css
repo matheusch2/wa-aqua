@@ -525,6 +525,35 @@ body::after {
   text-align: center;
 }
 
+.calc-toggle {
+  display: flex;
+  background: var(--cinza-2);
+  border-radius: 12px;
+  padding: 3px;
+  margin-bottom: 20px;
+  gap: 3px;
+}
+
+.calc-tab {
+  flex: 1;
+  padding: 9px 10px;
+  border: none;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  color: var(--texto-suave);
+}
+
+.calc-tab.calc-tab-ativo {
+  background: var(--verde);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(6, 107, 99, 0.28);
+}
+
 .field { margin-bottom: 14px; }
 
 .field label {

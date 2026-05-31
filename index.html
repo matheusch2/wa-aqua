@@ -90,28 +90,58 @@
 
     <main class="content">
       <section class="card" id="cardBiomassa">
-        <h2 class="card-title">Calculadora de Biomassa</h2>
-        <div class="field">
-          <label for="populacao">População inicial</label>
-          <input class="input-base" type="text" id="populacao" placeholder="Ex: 200.000" inputmode="numeric" />
+        <div class="calc-toggle">
+          <button class="calc-tab calc-tab-ativo" id="tabBiomassa">Biomassa</button>
+          <button class="calc-tab" id="tabSobrevivencia">Sobrevivência</button>
         </div>
-        <div class="field">
-          <label for="consumo">Consumo diário de ração</label>
-          <div class="input-group">
-            <input type="number" id="consumo" placeholder="Ex: 50" />
-            <span class="unidade">kg</span>
+
+        <div id="secaoBiomassa">
+          <div class="field">
+            <label for="populacao">População inicial</label>
+            <input class="input-base" type="text" id="populacao" placeholder="Ex: 200.000" inputmode="numeric" />
           </div>
-        </div>
-        <div class="field">
-          <label for="peso">Peso médio do camarão</label>
-          <div class="input-group">
-            <input type="number" id="peso" placeholder="Ex: 10" />
-            <span class="unidade">g</span>
+          <div class="field">
+            <label for="consumo">Consumo diário de ração</label>
+            <div class="input-group">
+              <input type="number" id="consumo" placeholder="Ex: 50" />
+              <span class="unidade">kg</span>
+            </div>
           </div>
+          <div class="field">
+            <label for="peso">Peso médio do camarão</label>
+            <div class="input-group">
+              <input type="number" id="peso" placeholder="Ex: 10" />
+              <span class="unidade">g</span>
+            </div>
+          </div>
+          <button class="btn-primary" id="btnCalcular">Calcular</button>
+          <button class="btn-ghost" id="btnLimpar">Limpar</button>
+          <div id="resultado" class="resultado"></div>
         </div>
-        <button class="btn-primary" id="btnCalcular">Calcular</button>
-        <button class="btn-ghost" id="btnLimpar">Limpar</button>
-        <div id="resultado" class="resultado"></div>
+
+        <div id="secaoSobrevivencia" style="display:none">
+          <div class="field">
+            <label for="sobrevPopInicial">População inicial (povoamento)</label>
+            <input class="input-base" type="text" id="sobrevPopInicial" placeholder="Ex: 200.000" inputmode="numeric" />
+          </div>
+          <div class="field">
+            <label for="sobrevBiomassa">Biomassa total atual</label>
+            <div class="input-group">
+              <input type="number" id="sobrevBiomassa" placeholder="Ex: 500" />
+              <span class="unidade">kg</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="sobrevPeso">Peso médio atual</label>
+            <div class="input-group">
+              <input type="number" id="sobrevPeso" placeholder="Ex: 12" />
+              <span class="unidade">g</span>
+            </div>
+          </div>
+          <button class="btn-primary" id="btnCalcularSobrev">Calcular</button>
+          <button class="btn-ghost" id="btnLimparSobrev">Limpar</button>
+          <div id="resultadoSobrev" class="resultado"></div>
+        </div>
       </section>
 
       <section class="card" id="cardM2" style="display:none">
