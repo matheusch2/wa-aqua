@@ -252,10 +252,10 @@ function calcularSimInicialUI(): void {
   }
 
   div.innerHTML = `
+    <button class="btn-ghost sim-voltar" id="btnSimInicialVoltar">← Voltar</button>
     <div class="sim-destaque">
       <div class="sim-destaque-label">Ração 1ª semana</div>
       <div class="sim-destaque-valor">${arredondaRacao(base)} kg<span style="font-size:16px;font-weight:400;opacity:0.8"> /dia</span></div>
-      <div class="sim-destaque-sub">${arredondaRacao(base) * 6} kg na semana · projeção 3 semanas</div>
     </div>
     <div class="sim-tabela-wrap">
       <table class="sim-tabela">
@@ -268,6 +268,12 @@ function calcularSimInicialUI(): void {
     <p style="font-size:11px;color:var(--texto-suave);margin-top:10px;text-align:center">
       Após a 3ª semana, use a aba Pós-Biometria para ajustar
     </p>`;
+
+  el('simInicialForm').style.display = 'none';
+  document.getElementById('btnSimInicialVoltar')!.addEventListener('click', () => {
+    el('simInicialForm').style.display = 'block';
+    div.innerHTML = '';
+  });
 }
 
 function calcularSimBiometriaUI(): void {
@@ -326,16 +332,16 @@ function calcularSimBiometriaUI(): void {
     prevR = r;
   }
 
-  // Build table rows
-  let pesoSemTabela = gramAtual;
+  // Build table rows — pesoAtual shows the weight at the START of each week
+  let pesoAtual = gramAtual;
   let racaoAcumTabela = racaoAcum;
   let diaInicio = diaCultivo;
   let linhas = '';
 
   for (let i = 0; i < semanas; i++) {
     const diaFim = diaInicio + 6;
-    pesoSemTabela = Math.min(pesoSemTabela + crescSem, despescaG);
-    const bioSem = popAtual * (pesoSemTabela / 1000);
+    const pesoFim = Math.min(pesoAtual + crescSem, despescaG);
+    const bioSem = popAtual * (pesoFim / 1000);
     const racaoDia = roundedDaily[i];
     const racaoSem = racaoDia * 6;
     racaoAcumTabela += racaoSem;
@@ -351,12 +357,13 @@ function calcularSimBiometriaUI(): void {
 
     linhas += `<tr${rowClass ? ` class="${rowClass}"` : ''}>
       <td>${periodoTexto}</td>
-      <td>${fmt(pesoSemTabela, 1)}g</td>
+      <td>${fmt(pesoAtual, 1)}g</td>
       <td><strong>${racaoDia} kg</strong></td>
       <td>${fmt(racaoSem, 0)} kg</td>
       <td>${fmt(racaoAcumTabela, 0)} kg</td>
       <td class="${fcCellClass}">${fcSem.toFixed(2)}</td>
     </tr>`;
+    pesoAtual = pesoFim;
     diaInicio = diaFim + 1;
   }
 
@@ -364,10 +371,10 @@ function calcularSimBiometriaUI(): void {
   const fcProjetado = (racaoAcum + racaoTotalReal) / bioFinal;
 
   div.innerHTML = `
+    <button class="btn-ghost sim-voltar" id="btnSimBioVoltar">← Voltar</button>
     <div class="sim-destaque">
       <div class="sim-destaque-label">Ração esta semana</div>
       <div class="sim-destaque-valor">${roundedDaily[0]} kg<span style="font-size:17px;font-weight:400;opacity:0.75"> /dia</span></div>
-      <div class="sim-destaque-sub">${roundedDaily[0] * 6} kg na semana · ${semanas} sem. até despesca</div>
     </div>
     <div class="sim-resumo">
       <div class="sim-resumo-item">
@@ -391,6 +398,12 @@ function calcularSimBiometriaUI(): void {
         <tbody>${linhas}</tbody>
       </table>
     </div>`;
+
+  el('simBioForm').style.display = 'none';
+  document.getElementById('btnSimBioVoltar')!.addEventListener('click', () => {
+    el('simBioForm').style.display = 'block';
+    div.innerHTML = '';
+  });
 }
 
 function init(): void {
@@ -559,12 +572,14 @@ function init(): void {
   el('btnSimInicialLimpar').addEventListener('click', () => {
     inp('simInicialPop').value = '';
     el('simInicialResultado').innerHTML = '';
+    el('simInicialForm').style.display = 'block';
   });
 
   el('btnSimBiometria').addEventListener('click', calcularSimBiometriaUI);
   el('btnSimBiometriaLimpar').addEventListener('click', () => {
     ['simBioPop', 'simBioRacaoAcum', 'simBioDia', 'simBioGram', 'simBioSobrev', 'simBioCrescimento', 'simBioDespesca'].forEach(id => { inp(id).value = ''; });
     el('simBioResultado').innerHTML = '';
+    el('simBioForm').style.display = 'block';
   });
 
 }

@@ -994,3 +994,8 @@ body::after {
 .fc-val.fc-ok { color: #2e7d32; }
 .fc-val.fc-medio { color: #e65100; }
 .fc-val.fc-alto { color: var(--vermelho); font-weight: 700; }
+
+.sim-voltar {
+  margin-bottom: 16px;
+  width: 100%;
+}
