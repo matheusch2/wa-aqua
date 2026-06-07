@@ -16,7 +16,7 @@ const TABELA: Array<{ peso: number; taxa: number }> = [
   { peso: 29, taxa: 1.30 }, { peso: 30, taxa: 1.30 },
 ];
 
-function obterTaxa(peso: number): number | null {
+export function obterTaxa(peso: number): number | null {
   if (peso < 1 || peso > 30) return null;
   for (const item of TABELA) {
     if (peso === item.peso) return item.taxa;

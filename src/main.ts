@@ -1,5 +1,5 @@
 import { obterFase, diasParaLuaCheia, diasParaLuaNova, proximaLuaCheia, proximaLuaNova, formatarData } from './lua';
-import { calcularBiomassa } from './calculadora';
+import { calcularBiomassa, obterTaxa } from './calculadora';
 
 function fmt(v: number, casas: number): string {
   return v.toLocaleString('pt-BR', {
@@ -221,6 +221,161 @@ function fecharModalClima(): void {
   el('climaModal').classList.remove('aberto');
 }
 
+function calcularSimInicialUI(): void {
+  const pop = parseFloat(inp('simInicialPop').value.replace(/\./g, ''));
+  const div = el('simInicialResultado');
+  if (!pop) { div.innerHTML = '<p class="aviso">Preencha o povoamento.</p>'; return; }
+
+  // base: 1 kg per 100k PLs
+  const base = pop / 100000;
+  const semanas = [
+    { sem: 1, pesoPrev: 0.5, diasCultivo: '1–7' },
+    { sem: 2, pesoPrev: 1.0, diasCultivo: '8–14' },
+    { sem: 3, pesoPrev: 1.5, diasCultivo: '15–21' },
+  ];
+
+  const linhas = semanas.map(({ sem, pesoPrev, diasCultivo }) => {
+    const racaoDia = base * sem;
+    const racaoSem = racaoDia * 6;
+    const biomassaEst = pop * (pesoPrev / 1000);
+    return `<tr>
+      <td>${diasCultivo}</td>
+      <td>${sem}ª</td>
+      <td>~${pesoPrev.toFixed(1)}g</td>
+      <td>${fmt(racaoDia, 1)} kg/dia</td>
+      <td>${fmt(racaoSem, 1)} kg</td>
+      <td>~${fmt(biomassaEst, 0)} kg</td>
+    </tr>`;
+  }).join('');
+
+  div.innerHTML = `
+    <div class="sim-tabela-wrap">
+      <table class="sim-tabela">
+        <thead><tr>
+          <th>Dias</th><th>Semana</th><th>Peso est.</th><th>Ração/dia</th><th>Ração/sem</th><th>Biomassa est.</th>
+        </tr></thead>
+        <tbody>${linhas}</tbody>
+      </table>
+    </div>
+    <p style="font-size:11px;color:var(--texto-suave);margin-top:10px;text-align:center">
+      Projeção inicial — ajuste conforme consumo observado
+    </p>`;
+}
+
+function calcularSimBiometriaUI(): void {
+  const pop = parseFloat(inp('simBioPop').value.replace(/\./g, ''));
+  const racaoAcum = parseFloat(inp('simBioRacaoAcum').value.replace(/\./g, '').replace(',', '.'));
+  const diaCultivo = parseFloat(inp('simBioDia').value);
+  const gramAtual = parseFloat(inp('simBioGram').value);
+  const sobrevPerc = parseFloat(inp('simBioSobrev').value);
+  const crescSem = parseFloat(inp('simBioCrescimento').value) || 1.8;
+  const despescaG = parseFloat(inp('simBioDespesca').value);
+  const fcMeta = parseFloat(el<HTMLSelectElement>('simBioFC').value);
+  const div = el('simBioResultado');
+
+  if (!pop || !racaoAcum || !diaCultivo || !gramAtual || !sobrevPerc || !despescaG) {
+    div.innerHTML = '<p class="aviso">Preencha todos os campos.</p>';
+    return;
+  }
+  if (despescaG > 20) {
+    div.innerHTML = '<p class="aviso">Gramatura de despesca máxima: 20g.</p>';
+    return;
+  }
+
+  const popAtual = pop * (sobrevPerc / 100);
+  const bioAtual = popAtual * (gramAtual / 1000);
+  const bioFinal = popAtual * (despescaG / 1000);
+  const racaoTotal = fcMeta * bioFinal;
+  const racaoRestante = racaoTotal - racaoAcum;
+  const semanas = Math.ceil((despescaG - gramAtual) / crescSem);
+
+  if (racaoRestante <= 0) {
+    div.innerHTML = '<p class="aviso">Ração acumulada já supera o orçamento para o FC desejado.</p>';
+    return;
+  }
+
+  // Generate natural schedule (always-increasing) then scale
+  const schedule: number[] = [];
+  let pesoSem = gramAtual;
+  for (let s = 0; s < semanas; s++) {
+    const pesoMed = pesoSem + crescSem / 2;
+    const taxa = obterTaxa(Math.min(pesoMed, 20)) ?? obterTaxa(20) ?? 2.39;
+    const biomassaSem = popAtual * (pesoMed / 1000);
+    schedule.push(biomassaSem * (taxa / 100) * 6);
+    pesoSem += crescSem;
+  }
+
+  // Scale to fit racaoRestante budget
+  const totalNatural = schedule.reduce((a, b) => a + b, 0);
+  const fator = racaoRestante / totalNatural;
+  let scaled = schedule.map(v => v * fator);
+
+  // Re-apply always-increasing constraint
+  for (let i = 1; i < scaled.length; i++) {
+    if (scaled[i] < scaled[i - 1]) scaled[i] = scaled[i - 1];
+  }
+
+  // Adjust last week to hit exact budget
+  const somaSemFim = scaled.slice(0, -1).reduce((a, b) => a + b, 0);
+  scaled[scaled.length - 1] = Math.max(racaoRestante - somaSemFim, scaled[scaled.length - 2] ?? 0);
+
+  // Build table rows
+  let pesoSemTabela = gramAtual;
+  let racaoAcumTabela = racaoAcum;
+  let diaInicio = diaCultivo;
+  let linhas = '';
+
+  for (let i = 0; i < semanas; i++) {
+    const semNum = i + 1;
+    pesoSemTabela += crescSem;
+    const bioSem = popAtual * (pesoSemTabela / 1000);
+    racaoAcumTabela += scaled[i];
+    const fcSem = racaoAcumTabela / bioSem;
+    const diaFim = diaInicio + 6;
+    const fcAlto = fcSem > fcMeta + 0.1;
+    linhas += `<tr${fcAlto ? ' class="fc-alto"' : ''}>
+      <td>${diaInicio}–${diaFim}</td>
+      <td>${semNum}ª</td>
+      <td>${fmt(pesoSemTabela, 1)}g</td>
+      <td>${fmt(scaled[i] / 6, 1)} kg/dia</td>
+      <td>${fmt(scaled[i], 1)} kg</td>
+      <td>${fmt(racaoAcumTabela, 1)} kg</td>
+      <td>${fcSem.toFixed(2)}</td>
+    </tr>`;
+    diaInicio = diaFim + 1;
+  }
+
+  div.innerHTML = `
+    <div class="sim-resumo">
+      <div class="sim-resumo-item">
+        <div class="label">Biomassa atual</div>
+        <div class="valor">${fmt(bioAtual, 0)} kg</div>
+      </div>
+      <div class="sim-resumo-item">
+        <div class="label">Biomassa final est.</div>
+        <div class="valor">${fmt(bioFinal, 0)} kg</div>
+      </div>
+      <div class="sim-resumo-item">
+        <div class="label">Semanas p/ despesca</div>
+        <div class="valor">${semanas}</div>
+      </div>
+    </div>
+    <div class="sim-tabela-wrap">
+      <table class="sim-tabela">
+        <thead><tr>
+          <th>Dias</th><th>Sem.</th><th>Peso</th><th>Ração/dia</th><th>Ração/sem</th><th>Acumulada</th><th>FC</th>
+        </tr></thead>
+        <tbody>${linhas}</tbody>
+        <tfoot><tr>
+          <td colspan="4"></td>
+          <td>${fmt(scaled.reduce((a,b)=>a+b,0), 1)} kg</td>
+          <td>${fmt(racaoAcum + scaled.reduce((a,b)=>a+b,0), 1)} kg</td>
+          <td>${fcMeta.toFixed(2)}</td>
+        </tr></tfoot>
+      </table>
+    </div>`;
+}
+
 function init(): void {
   atualizarLua();
   carregarTemperatura();
@@ -266,11 +421,13 @@ function init(): void {
   el('menuBiomassa').addEventListener('click', () => {
     el('cardBiomassa').style.display = 'block';
     el('cardM2').style.display = 'none';
+    el('cardSimulacao').style.display = 'none';
   });
 
   el('menuM2').addEventListener('click', () => {
     el('cardBiomassa').style.display = 'none';
     el('cardM2').style.display = 'block';
+    el('cardSimulacao').style.display = 'none';
   });
 
   // Toggle Biomassa / Sobrevivência
@@ -339,6 +496,58 @@ function init(): void {
     el('resultadoM2').innerHTML = '';
     el('campoDensidade').style.display = 'block';
     el('campoPovoamento').style.display = 'none';
+  });
+
+  // Simulação
+  const _K = 'NTQxMjYwMTA=';
+
+  el('menuSimulacao').addEventListener('click', () => {
+    el('cardBiomassa').style.display = 'none';
+    el('cardM2').style.display = 'none';
+    el('cardSimulacao').style.display = 'block';
+  });
+
+  el('btnSenha').addEventListener('click', () => {
+    if (btoa(inp('senhaInput').value) === _K) {
+      el('simSenha').style.display = 'none';
+      el('simConteudo').style.display = 'block';
+    } else {
+      el('senhaErro').style.display = 'block';
+    }
+  });
+
+  inp('senhaInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') el('btnSenha').click();
+  });
+
+  // Simulation tab toggle
+  el('tabSimInicial').addEventListener('click', () => {
+    el('tabSimInicial').classList.add('calc-tab-ativo');
+    el('tabSimBiometria').classList.remove('calc-tab-ativo');
+    el('secaoSimInicial').style.display = 'block';
+    el('secaoSimBiometria').style.display = 'none';
+  });
+  el('tabSimBiometria').addEventListener('click', () => {
+    el('tabSimBiometria').classList.add('calc-tab-ativo');
+    el('tabSimInicial').classList.remove('calc-tab-ativo');
+    el('secaoSimBiometria').style.display = 'block';
+    el('secaoSimInicial').style.display = 'none';
+  });
+
+  inp('simInicialPop').addEventListener('input', function () { formatarPopulacao(this); });
+  inp('simBioPop').addEventListener('input', function () { formatarPopulacao(this); });
+  inp('simBioRacaoAcum').addEventListener('input', function () { formatarPopulacao(this); });
+
+  el('btnSimInicial').addEventListener('click', calcularSimInicialUI);
+  el('btnSimInicialLimpar').addEventListener('click', () => {
+    inp('simInicialPop').value = '';
+    el('simInicialResultado').innerHTML = '';
+  });
+
+  el('btnSimBiometria').addEventListener('click', calcularSimBiometriaUI);
+  el('btnSimBiometriaLimpar').addEventListener('click', () => {
+    ['simBioPop', 'simBioRacaoAcum', 'simBioDia', 'simBioGram', 'simBioSobrev', 'simBioCrescimento', 'simBioDespesca'].forEach(id => { inp(id).value = ''; });
+    el('simBioResultado').innerHTML = '';
   });
 
 }

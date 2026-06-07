@@ -46,6 +46,7 @@
       <nav class="dropdown" id="dropdown">
         <button class="dropdown-item" id="menuBiomassa">Biomassa</button>
         <button class="dropdown-item" id="menuM2">Animais por m²</button>
+        <button class="dropdown-item" id="menuSimulacao">Simulação</button>
       </nav>
     </header>
 
@@ -176,6 +177,106 @@
         <button class="btn-primary" id="btnCalcularM2">Calcular</button>
         <button class="btn-ghost" id="btnLimparM2">Limpar</button>
         <div id="resultadoM2" class="resultado"></div>
+      </section>
+
+      <section class="card" id="cardSimulacao" style="display:none">
+
+        <div id="simSenha">
+          <div class="sim-lock-icon">🔒</div>
+          <h2 class="card-title">Simulação de Cultivo</h2>
+          <p class="sim-lock-desc">Área exclusiva WA Aqua</p>
+          <div class="field">
+            <input type="password" id="senhaInput" class="input-base" placeholder="Senha" />
+          </div>
+          <button class="btn-primary" id="btnSenha">Entrar</button>
+          <p class="aviso" id="senhaErro" style="display:none">Senha incorreta</p>
+        </div>
+
+        <div id="simConteudo" style="display:none">
+          <div class="calc-toggle">
+            <button class="calc-tab calc-tab-ativo" id="tabSimInicial">Projeção Inicial</button>
+            <button class="calc-tab" id="tabSimBiometria">Pós-Biometria</button>
+          </div>
+
+          <!-- PROJEÇÃO INICIAL -->
+          <div id="secaoSimInicial">
+            <div class="field">
+              <label for="simInicialPop">Povoamento</label>
+              <input class="input-base" type="text" id="simInicialPop" placeholder="Ex: 200.000" inputmode="numeric" />
+            </div>
+            <button class="btn-primary" id="btnSimInicial">Calcular</button>
+            <button class="btn-ghost" id="btnSimInicialLimpar">Limpar</button>
+            <div id="simInicialResultado" class="resultado"></div>
+          </div>
+
+          <!-- PÓS-BIOMETRIA -->
+          <div id="secaoSimBiometria" style="display:none">
+            <div class="sim-section">
+              <span class="sim-section-label">Cultivo</span>
+              <div class="field">
+                <label for="simBioPop">Povoamento inicial</label>
+                <input class="input-base" type="text" id="simBioPop" placeholder="Ex: 200.000" inputmode="numeric" />
+              </div>
+              <div class="field">
+                <label for="simBioRacaoAcum">Ração acumulada até hoje</label>
+                <div class="input-group">
+                  <input class="input-base" type="text" id="simBioRacaoAcum" placeholder="Ex: 276" inputmode="numeric" style="border-radius:12px 0 0 12px" />
+                  <span class="unidade">kg</span>
+                </div>
+              </div>
+            </div>
+            <div class="sim-section">
+              <span class="sim-section-label">Biometria</span>
+              <div class="field">
+                <label for="simBioDia">Dia de cultivo</label>
+                <input class="input-base" type="number" id="simBioDia" placeholder="Ex: 35" inputmode="numeric" />
+              </div>
+              <div class="field">
+                <label for="simBioGram">Gramatura atual</label>
+                <div class="input-group">
+                  <input type="number" id="simBioGram" placeholder="Ex: 2.8" step="0.1" />
+                  <span class="unidade">g</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="simBioSobrev">Sobrevivência estimada</label>
+                <div class="input-group">
+                  <input type="number" id="simBioSobrev" placeholder="Ex: 60" />
+                  <span class="unidade">%</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="simBioCrescimento">Crescimento esperado</label>
+                <div class="input-group">
+                  <input type="number" id="simBioCrescimento" placeholder="1.8" step="0.1" value="1.8" />
+                  <span class="unidade">g/sem</span>
+                </div>
+              </div>
+            </div>
+            <div class="sim-section">
+              <span class="sim-section-label">Meta</span>
+              <div class="field">
+                <label for="simBioDespesca">Gramatura de despesca</label>
+                <div class="input-group">
+                  <input type="number" id="simBioDespesca" placeholder="Ex: 15" max="20" />
+                  <span class="unidade">g</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="simBioFC">FC desejado</label>
+                <select class="input-base" id="simBioFC">
+                  <option value="1.00">FC 1,00</option>
+                  <option value="1.10">FC 1,10</option>
+                  <option value="1.15" selected>FC 1,15</option>
+                  <option value="1.20">FC 1,20</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn-primary" id="btnSimBiometria">Gerar Projeção</button>
+            <button class="btn-ghost" id="btnSimBiometriaLimpar">Limpar</button>
+            <div id="simBioResultado" class="resultado"></div>
+          </div>
+        </div>
       </section>
     </main>
 
