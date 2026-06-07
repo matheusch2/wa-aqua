@@ -871,39 +871,78 @@ body::after {
   margin-bottom: 12px;
 }
 
+/* Card de destaque — ração desta semana */
+.sim-destaque {
+  background: linear-gradient(135deg, var(--verde) 0%, var(--verde-claro) 100%);
+  color: #fff;
+  border-radius: 18px;
+  padding: 20px 22px;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(6,107,99,0.35);
+}
+
+.sim-destaque-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.sim-destaque-valor {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.sim-destaque-sub {
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+/* Cards de resumo */
 .sim-resumo {
   display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 8px;
+  margin-bottom: 14px;
   flex-wrap: wrap;
 }
 
 .sim-resumo-item {
   flex: 1;
-  min-width: 120px;
+  min-width: 100px;
   background: var(--verde-suave);
   border: 1px solid rgba(6,107,99,0.15);
   border-radius: 12px;
-  padding: 10px 14px;
+  padding: 10px 12px;
+  text-align: center;
 }
 
 .sim-resumo-item .label {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--texto-suave);
-  margin-bottom: 2px;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
 }
 
 .sim-resumo-item .valor {
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 800;
   color: var(--verde);
 }
 
+/* Tabela */
 .sim-tabela-wrap {
   overflow-x: auto;
-  margin-top: 16px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid var(--cinza-2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .sim-tabela {
@@ -915,34 +954,43 @@ body::after {
 .sim-tabela th {
   background: var(--verde);
   color: #fff;
-  padding: 9px 10px;
+  padding: 10px 8px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 11px;
   white-space: nowrap;
+  letter-spacing: 0.03em;
 }
 
-.sim-tabela th:first-child { border-radius: 12px 0 0 0; }
+.sim-tabela th:first-child { border-radius: 12px 0 0 0; text-align: left; padding-left: 12px; }
 .sim-tabela th:last-child { border-radius: 0 12px 0 0; }
 
 .sim-tabela td {
-  padding: 8px 10px;
+  padding: 9px 8px;
   text-align: center;
   border-bottom: 1px solid var(--cinza-2);
   color: var(--texto);
+  vertical-align: middle;
 }
+
+.sim-tabela td:first-child { text-align: left; padding-left: 12px; font-size: 12px; color: var(--texto-suave); }
 
 .sim-tabela tr:last-child td { border-bottom: none; }
-.sim-tabela tr:nth-child(even) td { background: var(--cinza-1); }
+.sim-tabela tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
 
-.fc-alto td:last-child {
-  color: var(--vermelho);
+/* Linha desta semana */
+.sim-semana-atual td {
+  background: rgba(6,107,99,0.07) !important;
+  font-weight: 600;
+}
+.sim-semana-atual td:first-child {
+  color: var(--verde) !important;
   font-weight: 700;
+  font-style: normal;
 }
 
-.sim-tabela tfoot td {
-  font-weight: 700;
-  background: rgba(6,107,99,0.07);
-  border-top: 2px solid var(--verde);
-  font-size: 12px;
-}
+/* FC colorido */
+.fc-val { font-weight: 600; }
+.fc-val.fc-ok { color: #2e7d32; }
+.fc-val.fc-medio { color: #e65100; }
+.fc-val.fc-alto { color: var(--vermelho); font-weight: 700; }

@@ -221,44 +221,52 @@ function fecharModalClima(): void {
   el('climaModal').classList.remove('aberto');
 }
 
+function arredondaRacao(kg: number): number {
+  if (kg >= 10) return Math.round(kg / 5) * 5;
+  return Math.round(kg);
+}
+
 function calcularSimInicialUI(): void {
   const pop = parseFloat(inp('simInicialPop').value.replace(/\./g, ''));
   const div = el('simInicialResultado');
   if (!pop) { div.innerHTML = '<p class="aviso">Preencha o povoamento.</p>'; return; }
 
-  // base: 1 kg per 100k PLs
   const base = pop / 100000;
-  const semanas = [
-    { sem: 1, pesoPrev: 0.5, diasCultivo: '1–7' },
-    { sem: 2, pesoPrev: 1.0, diasCultivo: '8–14' },
-    { sem: 3, pesoPrev: 1.5, diasCultivo: '15–21' },
-  ];
+  let linhas = '';
+  let prevDia = 0;
 
-  const linhas = semanas.map(({ sem, pesoPrev, diasCultivo }) => {
-    const racaoDia = base * sem;
+  for (let sem = 1; sem <= 3; sem++) {
+    let racaoDia = arredondaRacao(base * sem);
+    racaoDia = Math.max(racaoDia, prevDia);
+    prevDia = racaoDia;
     const racaoSem = racaoDia * 6;
-    const biomassaEst = pop * (pesoPrev / 1000);
-    return `<tr>
-      <td>${diasCultivo}</td>
-      <td>${sem}ª</td>
-      <td>~${pesoPrev.toFixed(1)}g</td>
-      <td>${fmt(racaoDia, 1)} kg/dia</td>
-      <td>${fmt(racaoSem, 1)} kg</td>
-      <td>~${fmt(biomassaEst, 0)} kg</td>
+    const pesoPrev = (sem * 0.5).toFixed(1);
+    const d1 = (sem - 1) * 7 + 1;
+    const d2 = sem * 7;
+    linhas += `<tr>
+      <td>${d1}–${d2}</td>
+      <td>~${pesoPrev}g</td>
+      <td><strong>${racaoDia} kg</strong></td>
+      <td>${fmt(racaoSem, 0)} kg</td>
     </tr>`;
-  }).join('');
+  }
 
   div.innerHTML = `
+    <div class="sim-destaque">
+      <div class="sim-destaque-label">Ração 1ª semana</div>
+      <div class="sim-destaque-valor">${arredondaRacao(base)} kg<span style="font-size:16px;font-weight:400;opacity:0.8"> /dia</span></div>
+      <div class="sim-destaque-sub">${arredondaRacao(base) * 6} kg na semana · projeção 3 semanas</div>
+    </div>
     <div class="sim-tabela-wrap">
       <table class="sim-tabela">
         <thead><tr>
-          <th>Dias</th><th>Semana</th><th>Peso est.</th><th>Ração/dia</th><th>Ração/sem</th><th>Biomassa est.</th>
+          <th>Dias</th><th>Peso est.</th><th>Ração/dia</th><th>Ração/sem</th>
         </tr></thead>
         <tbody>${linhas}</tbody>
       </table>
     </div>
     <p style="font-size:11px;color:var(--texto-suave);margin-top:10px;text-align:center">
-      Projeção inicial — ajuste conforme consumo observado
+      Após a 3ª semana, use a aba Pós-Biometria para ajustar
     </p>`;
 }
 
@@ -294,30 +302,29 @@ function calcularSimBiometriaUI(): void {
     return;
   }
 
-  // Generate natural schedule (always-increasing) then scale
+  // Natural schedule based on feeding rate table
   const schedule: number[] = [];
   let pesoSem = gramAtual;
   for (let s = 0; s < semanas; s++) {
-    const pesoMed = pesoSem + crescSem / 2;
-    const taxa = obterTaxa(Math.min(pesoMed, 20)) ?? obterTaxa(20) ?? 2.39;
-    const biomassaSem = popAtual * (pesoMed / 1000);
-    schedule.push(biomassaSem * (taxa / 100) * 6);
+    const pesoMed = Math.min(pesoSem + crescSem / 2, 20);
+    const taxa = obterTaxa(pesoMed) ?? 2.39;
+    schedule.push(popAtual * (pesoMed / 1000) * (taxa / 100) * 6);
     pesoSem += crescSem;
   }
 
-  // Scale to fit racaoRestante budget
-  const totalNatural = schedule.reduce((a, b) => a + b, 0);
-  const fator = racaoRestante / totalNatural;
-  let scaled = schedule.map(v => v * fator);
+  // Scale to ration budget
+  const fator = racaoRestante / schedule.reduce((a, b) => a + b, 0);
+  const scaled = schedule.map(v => v * fator);
 
-  // Re-apply always-increasing constraint
-  for (let i = 1; i < scaled.length; i++) {
-    if (scaled[i] < scaled[i - 1]) scaled[i] = scaled[i - 1];
+  // Round to nearest 5 (or nearest 1 for small values) and enforce always-increasing
+  const roundedDaily: number[] = [];
+  let prevR = 0;
+  for (let i = 0; i < scaled.length; i++) {
+    let r = arredondaRacao(scaled[i] / 6);
+    r = Math.max(r, prevR);
+    roundedDaily.push(r);
+    prevR = r;
   }
-
-  // Adjust last week to hit exact budget
-  const somaSemFim = scaled.slice(0, -1).reduce((a, b) => a + b, 0);
-  scaled[scaled.length - 1] = Math.max(racaoRestante - somaSemFim, scaled[scaled.length - 2] ?? 0);
 
   // Build table rows
   let pesoSemTabela = gramAtual;
@@ -326,52 +333,62 @@ function calcularSimBiometriaUI(): void {
   let linhas = '';
 
   for (let i = 0; i < semanas; i++) {
-    const semNum = i + 1;
-    pesoSemTabela += crescSem;
-    const bioSem = popAtual * (pesoSemTabela / 1000);
-    racaoAcumTabela += scaled[i];
-    const fcSem = racaoAcumTabela / bioSem;
     const diaFim = diaInicio + 6;
-    const fcAlto = fcSem > fcMeta + 0.1;
-    linhas += `<tr${fcAlto ? ' class="fc-alto"' : ''}>
-      <td>${diaInicio}–${diaFim}</td>
-      <td>${semNum}ª</td>
+    pesoSemTabela = Math.min(pesoSemTabela + crescSem, despescaG);
+    const bioSem = popAtual * (pesoSemTabela / 1000);
+    const racaoDia = roundedDaily[i];
+    const racaoSem = racaoDia * 6;
+    racaoAcumTabela += racaoSem;
+    const fcSem = racaoAcumTabela / bioSem;
+
+    let fcCellClass = 'fc-val';
+    if (fcSem > fcMeta + 0.1) fcCellClass += ' fc-alto';
+    else if (fcSem > fcMeta) fcCellClass += ' fc-medio';
+    else fcCellClass += ' fc-ok';
+
+    const periodoTexto = i === 0 ? '→ Esta sem.' : `${diaInicio}–${diaFim}`;
+    const rowClass = i === 0 ? 'sim-semana-atual' : '';
+
+    linhas += `<tr${rowClass ? ` class="${rowClass}"` : ''}>
+      <td>${periodoTexto}</td>
       <td>${fmt(pesoSemTabela, 1)}g</td>
-      <td>${fmt(scaled[i] / 6, 1)} kg/dia</td>
-      <td>${fmt(scaled[i], 1)} kg</td>
-      <td>${fmt(racaoAcumTabela, 1)} kg</td>
-      <td>${fcSem.toFixed(2)}</td>
+      <td><strong>${racaoDia} kg</strong></td>
+      <td>${fmt(racaoSem, 0)} kg</td>
+      <td>${fmt(racaoAcumTabela, 0)} kg</td>
+      <td class="${fcCellClass}">${fcSem.toFixed(2)}</td>
     </tr>`;
     diaInicio = diaFim + 1;
   }
 
+  const racaoTotalReal = roundedDaily.reduce((a, b) => a + b, 0) * 6;
+  const fcProjetado = (racaoAcum + racaoTotalReal) / bioFinal;
+
   div.innerHTML = `
+    <div class="sim-destaque">
+      <div class="sim-destaque-label">Ração esta semana</div>
+      <div class="sim-destaque-valor">${roundedDaily[0]} kg<span style="font-size:17px;font-weight:400;opacity:0.75"> /dia</span></div>
+      <div class="sim-destaque-sub">${roundedDaily[0] * 6} kg na semana · ${semanas} sem. até despesca</div>
+    </div>
     <div class="sim-resumo">
       <div class="sim-resumo-item">
         <div class="label">Biomassa atual</div>
         <div class="valor">${fmt(bioAtual, 0)} kg</div>
       </div>
       <div class="sim-resumo-item">
-        <div class="label">Biomassa final est.</div>
+        <div class="label">Meta despesca</div>
         <div class="valor">${fmt(bioFinal, 0)} kg</div>
       </div>
       <div class="sim-resumo-item">
-        <div class="label">Semanas p/ despesca</div>
-        <div class="valor">${semanas}</div>
+        <div class="label">FC projetado</div>
+        <div class="valor">${fcProjetado.toFixed(2)}</div>
       </div>
     </div>
     <div class="sim-tabela-wrap">
       <table class="sim-tabela">
         <thead><tr>
-          <th>Dias</th><th>Sem.</th><th>Peso</th><th>Ração/dia</th><th>Ração/sem</th><th>Acumulada</th><th>FC</th>
+          <th>Período</th><th>Peso</th><th>kg/dia</th><th>kg/sem</th><th>Acum.</th><th>FC</th>
         </tr></thead>
         <tbody>${linhas}</tbody>
-        <tfoot><tr>
-          <td colspan="4"></td>
-          <td>${fmt(scaled.reduce((a,b)=>a+b,0), 1)} kg</td>
-          <td>${fmt(racaoAcum + scaled.reduce((a,b)=>a+b,0), 1)} kg</td>
-          <td>${fcMeta.toFixed(2)}</td>
-        </tr></tfoot>
       </table>
     </div>`;
 }
