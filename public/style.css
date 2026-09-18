@@ -584,6 +584,7 @@ body::after {
 .input-base:focus {
   border-color: var(--verde);
   background: #fff;
+  box-shadow: 0 0 0 3px rgba(6,107,99,0.12);
 }
 
 .input-group {
@@ -598,6 +599,7 @@ body::after {
 .input-group:focus-within {
   border-color: var(--verde);
   background: #fff;
+  box-shadow: 0 0 0 3px rgba(6,107,99,0.12);
 }
 
 .input-group input {
@@ -627,7 +629,7 @@ body::after {
 .btn-primary {
   width: 100%;
   padding: 16px;
-  background: var(--vermelho);
+  background: linear-gradient(135deg, var(--verde-escuro) 0%, var(--verde-claro) 100%);
   color: #fff;
   border: none;
   border-radius: 14px;
@@ -636,11 +638,13 @@ body::after {
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
   letter-spacing: 0.4px;
-  transition: background 0.2s, transform 0.1s;
+  transition: box-shadow 0.2s, transform 0.1s;
   margin-top: 6px;
+  box-shadow: 0 4px 14px rgba(6,107,99,0.35);
 }
 
-.btn-primary:active { transform: scale(0.98); background: #c53030; }
+.btn-primary:hover { box-shadow: 0 6px 20px rgba(6,107,99,0.45); }
+.btn-primary:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(6,107,99,0.3); }
 
 .btn-ghost {
   width: 100%;
@@ -658,34 +662,35 @@ body::after {
 .resultado { margin-top: 20px; }
 
 .resultado-card {
-  border-radius: 14px;
-  padding: 12px 16px;
+  border-radius: 16px;
+  padding: 14px 18px;
   margin-bottom: 10px;
   text-align: center;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.35s ease;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .resultado-card .label {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
+  letter-spacing: 1.2px;
+  margin-bottom: 6px;
 }
 
 .resultado-card .valor {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 800;
   line-height: 1;
 }
 
 .resultado-card.principal {
   background: linear-gradient(135deg, var(--verde-escuro), var(--verde-claro));
+  box-shadow: 0 4px 16px rgba(6,107,99,0.3);
 }
 
 .resultado-card.principal .label,
@@ -693,22 +698,26 @@ body::after {
 
 .resultado-card.secundario {
   background: var(--verde-suave);
-  border: 2px solid #c8e8e5;
+  border: 2px solid rgba(6,107,99,0.15);
 }
 
 .resultado-card.secundario .label { color: var(--texto-suave); }
 .resultado-card.secundario .valor { color: var(--verde); }
 
 .sobrevivencia {
-  text-align: center;
-  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
   background: var(--cinza-1);
   border-radius: 12px;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--texto-suave);
+  border: 1px solid var(--cinza-2);
 }
 
-.sobrevivencia strong { color: var(--verde); font-weight: 700; }
+.sobrevivencia strong { color: var(--verde); font-weight: 800; font-size: 15px; }
 
 .aviso {
   text-align: center;
