@@ -128,21 +128,11 @@ body::after {
 
 .header-logo { flex-shrink: 0; }
 
-.header-logo h1 {
-  color: #fff;
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-.logo-ondas {
+.logo-img {
+  height: 36px;
+  width: auto;
   display: block;
-  width: 56px;
-  height: 7px;
-  margin: 0 auto;
+  border-radius: 8px;
 }
 
 .header-right {
