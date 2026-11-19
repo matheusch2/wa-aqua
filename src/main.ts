@@ -582,6 +582,10 @@ function init(): void {
     el('simBioForm').style.display = 'block';
   });
 
+  if (location.hash === '#sobrevivencia') {
+    el('menuBiomassa').click();
+    el('tabSobrevivencia').click();
+  }
 }
 
 init();
